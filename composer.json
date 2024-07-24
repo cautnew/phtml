@@ -1,0 +1,21 @@
+{
+  "name": "cautnew/phtml",
+  "version": "1.0",
+  "description": "An easy way to create and manipulate HTML tags",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "PHTML\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Felipe Martins",
+      "email": "felipedesmartins@gmail.com",
+      "homepage": "http://www.cautnew.com.br",
+      "role": "Back-End Developer"
+    }
+  ],
+  "minimum-stability": "dev"
+}
