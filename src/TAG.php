@@ -314,6 +314,10 @@ class TAG
             return $this;
         }
 
+        if (empty($value)) {
+            return $this;
+        }
+
         $this->parameters[$parameter] = $value;
 
         return $this;
@@ -347,7 +351,7 @@ class TAG
             return $this;
         }
 
-        if (in_array($class, $this->classList)) {
+        if (in_array($class, $this->classList) || empty($class)) {
             return $this;
         }
 
@@ -662,8 +666,18 @@ class TAG
         return new BUTTON($class, $id, $name, $html, $value, $type, ...$args);
     }
 
+    public static function label(?string $class = null, ?string $id = null, ?string $for = null, ?string $html = null, ...$args): LABEL
+    {
+        return new LABEL($class, $id, $for, $html, ...$args);
+    }
+
     public static function input(?string $class = null, ?string $id = null, ?string $name = null, ?string $value = null, ?string $type = 'text', ...$args): INPUT
     {
         return new INPUT($class, $id, $name, $value, $type, ...$args);
+    }
+
+    public static function textarea(?string $class = null, ?string $id = null, ?string $name = null, mixed $placeholder = null, ?string $html = null, ...$args): TEXTAREA
+    {
+        return new TEXTAREA($class, $id, $name, $placeholder, $html, ...$args);
     }
 }
