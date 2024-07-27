@@ -2,13 +2,15 @@
 
 ## Overview
 
-The `PHTML` class in PHP is designed to facilitate the creation of HTML tags using PHP objects. This class enables you to generate HTML tags dynamically, making it easier to build and manipulate HTML elements programmatically. One of the main features of this class is the ability to create the `<script>` tag using the `SCRIPT` object.
+The `PHTML` class in PHP is designed to facilitate the creation of HTML tags using PHP objects. This class enables you to generate HTML tags dynamically, making it easier to build and manipulate HTML elements programmatically. You can change any part of your HTML before rendering the page without worrying about concats. One of the main features of this class is the ability to create a tag and change it's parameters and content with simple methods and avoiding concats and huge strings, only objects.
+
+It's possible to write HTML as a string, _but why?_
 
 ## Features
 
 - Simplifies the creation of HTML tags using PHP.
 - Provides a clean and object-oriented way to generate HTML elements.
-- Supports creating a variety of HTML tags, including the `<script>` tag.
+- Supports creating a variety of HTML tags.
 
 ## Installation
 
