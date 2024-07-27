@@ -12,7 +12,7 @@ class COL extends BS
   private int $colXlSize = 0;
   private int $colXxlSize = 0;
 
-  public function __construct(int $size = 0, int $onXs = 0, int $onSm = 0, int $onMd = 0, int $onLg = 0, int $onXl = 0, int $onXxl = 0, ?string $class = null, ?string $id = null, mixed $append = null, ...$args)
+  public function __construct(int $size = 0, int $onXs = 0, int $onSm = 0, int $onMd = 0, int $onLg = 0, int $onXl = 0, int $onXxl = 0, ?string $class = null, ?string $id = null, ?string $html = null, ...$args)
   {
     $this->setTagType('div');
 
@@ -24,21 +24,10 @@ class COL extends BS
     $this->setSizeXl($onXl);
     $this->setSizeXxl($onXxl);
 
-    $arguments = $args ?? [];
-
-    if (!empty($class)) {
-      $arguments['class'] = $class;
-    }
-
-    if (!empty($id)) {
-      $arguments['id'] = $id;
-    }
-
-    if (!empty($append)) {
-      $arguments['append'] = $append;
-    }
-
-    $this->setParameters($arguments);
+    $this->setParameter('class', $class);
+    $this->setParameter('id', $id);
+    $this->setParameter('html', $html);
+    $this->setParameters($args);
   }
 
   private function addClassSize(string $sizeName, int $size): void
