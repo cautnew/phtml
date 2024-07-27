@@ -1,4 +1,4 @@
-# PHTML README
+# PHTML
 
 ## Overview
 
@@ -46,7 +46,7 @@ echo $div->render();
 ?>
 ```
 
-### Example with Inline Script
+### Example with inline Script
 
 You can also create a `<script>` tag with inline JavaScript code:
 
@@ -66,7 +66,7 @@ echo $script->render();
 ?>
 ```
 
-### Example with appending one object to other
+### Example appending one object to other
 
 You can also append one tag to other:
 
@@ -83,7 +83,28 @@ $div2 = new DIV('div-child', 'div-2');
 $div1->append($div2);
 
 // Render the <div> tag
-echo $div1->render();
+echo $div1;
+?>
+```
+
+### Example appending inputs and changing later
+
+You can also append one tag to other and edit it's parameters and content before rendering it:
+
+```php
+<?php
+
+use PHTML/DIV;
+
+// Create DIV object
+$div = new DIV('div-main', 'div-1');
+
+// Append $div2 into $div1
+$div1->append($input = TAG::input('my-inputs', placeholder: 'Test'));
+$input->setName('input-test');
+
+// Render the <div> tag
+echo $div;
 ?>
 ```
 
