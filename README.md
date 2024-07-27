@@ -99,7 +99,7 @@ use PHTML/DIV;
 // Create DIV object
 $div = new DIV('div-main', 'div-1');
 
-// Append $div2 into $div1
+// Append input and change it's name parameter
 $div->append($input = TAG::input('my-inputs', placeholder: 'Test'));
 $input->setName('input-test');
 
