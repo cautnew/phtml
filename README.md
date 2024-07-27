@@ -100,7 +100,7 @@ use PHTML/DIV;
 $div = new DIV('div-main', 'div-1');
 
 // Append $div2 into $div1
-$div1->append($input = TAG::input('my-inputs', placeholder: 'Test'));
+$div->append($input = TAG::input('my-inputs', placeholder: 'Test'));
 $input->setName('input-test');
 
 // Render the <div> tag
