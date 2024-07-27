@@ -11,9 +11,7 @@ class STRONG extends TAG
     {
         $this->setTagType('strong');
 
-        $arguments = $args ?? [];
-        $arguments['class'] = $class;
-
-        $this->setParameters($arguments);
+        $this->setParameter('class', $class);
+        $this->setParameters($args);
     }
 }

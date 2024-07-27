@@ -12,9 +12,8 @@ class META extends TAG
         $this->setTagType('meta');
         $this->setAllowContent(false);
 
-        $arguments = $args ?? [];
-        $arguments['name'] = $name;
-        $arguments['content'] = $value;
-        $this->setParameters($arguments);
+        $this->setParameter('name', $name);
+        $this->setParameter('value', $value);
+        $this->setParameters($args);
     }
 }

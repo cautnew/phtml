@@ -7,24 +7,13 @@ namespace PHTML;
  */
 class SCRIPT extends TAG
 {
-    public function __construct(?string $src = null, ?string $type = null, mixed $code = null, ...$args)
+    public function __construct(?string $src = null, ?string $type = null, array | string | null $code = null, ...$args)
     {
         $this->setTagType('script');
 
-        $arguments = $args ?? [];
-
-        if (!empty($src)) {
-            $arguments['src'] = $src;
-        }
-
-        if (!empty($type)) {
-            $arguments['type'] = $type;
-        }
-
-        if (!empty($code)) {
-            $arguments['append'] = $code;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('src', $src);
+        $this->setParameter('type', $type);
+        $this->setParameter('append', $code);
+        $this->setParameters($args);
     }
 }

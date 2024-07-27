@@ -7,20 +7,12 @@ namespace PHTML;
  */
 class H1 extends TAG
 {
-    public function __construct(?string $class = null, mixed $append = null, ...$args)
+    public function __construct(?string $class = null, ?string $html = null, ...$args)
     {
         $this->setTagType('h1');
 
-        $arguments = $args ?? [];
-
-        if (!empty($class)) {
-            $arguments['class'] = $class;
-        }
-
-        if (!empty($append)) {
-            $arguments['append'] = $append;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('class', $class);
+        $this->setParameter('html', $html);
+        $this->setParameters($args);
     }
 }

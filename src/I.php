@@ -12,12 +12,7 @@ class I extends TAG
         $this->setTagType('i');
         $this->setAllowContent(false);
 
-        $arguments = $args ?? [];
-
-        if (!empty($class)) {
-            $arguments['class'] = $class;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('class', $class);
+        $this->setParameters($args);
     }
 }

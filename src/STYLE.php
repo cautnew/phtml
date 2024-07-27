@@ -11,16 +11,8 @@ class STYLE extends TAG
     {
         $this->setTagType('style');
 
-        $arguments = $args ?? [];
-
-        if (!empty($src)) {
-            $arguments['src'] = $src;
-        }
-
-        if (!empty($code)) {
-            $arguments['append'] = $code;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('src', $src);
+        $this->setParameter('append', $code);
+        $this->setParameters($args);
     }
 }

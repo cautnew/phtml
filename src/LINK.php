@@ -12,20 +12,9 @@ class LINK extends TAG
         $this->setTagType('link');
         $this->setAllowContent(false);
 
-        $arguments = $args ?? [];
-
-        if (!empty($href)) {
-            $arguments['href'] = $href;
-        }
-
-        if (!empty($rel)) {
-            $arguments['rel'] = $rel;
-        }
-
-        if (!empty($type)) {
-            $arguments['type'] = $type;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('href', $href);
+        $this->setParameter('rel', $rel);
+        $this->setParameter('type', $type);
+        $this->setParameters($args);
     }
 }

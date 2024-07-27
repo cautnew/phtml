@@ -15,6 +15,9 @@ class TAG
 
     private array $classList = [];
     private array $parameters = [];
+    private array $parametersBoolean = [];
+    private array $parametersData = [];
+    private array $parametersAria = [];
     private array $appendList = [];
     private array $appendAfterList = [];
     private array $appendBeforeList = [];
@@ -62,7 +65,24 @@ class TAG
             if (is_array($value)) {
                 $value = join(' ', $value);
             }
+
             $html .= " {$parameter}=\"{$value}\"";
+        }
+
+        foreach ($this->parametersData as $parameter => $value) {
+            $html .= " data-{$parameter}=\"{$value}\"";
+        }
+
+        foreach ($this->parametersAria as $parameter => $value) {
+            $html .= " aria-{$parameter}=\"{$value}\"";
+        }
+
+        foreach ($this->parametersBoolean as $parameter => $value) {
+            if ($value !== true) {
+                continue;
+            }
+
+            $html .= " {$parameter}";
         }
 
         if (!$this->isAllowContent()) {
@@ -289,19 +309,14 @@ class TAG
                 }
         }
 
+        if (in_array($parameter, $this->permBooleanAttr)) {
+            $this->parametersBoolean[$parameter] = $value;
+            return $this;
+        }
+
         $this->parameters[$parameter] = $value;
 
         return $this;
-    }
-
-    public function setAttribute(string $attribute, mixed $value): self
-    {
-        return $this->setParameter($attribute, $value);
-    }
-
-    public function setAttr(string $attribute, mixed $value): self
-    {
-        return $this->setParameter($attribute, $value);
     }
 
     public function getClassList(): array
@@ -356,7 +371,8 @@ class TAG
 
     public function setDataAttribute(string $data, string | array $value): self
     {
-        return $this->setParameter("data-{$data}", $value);
+        $this->parametersData[$data] = $value;
+        return $this;
     }
 
     public function setData(string $data, string | array $value): self
@@ -369,21 +385,26 @@ class TAG
         return $this->setDataAttribute($data, $value);
     }
 
-    public function setAriaAttributes(array $ariaAttributes): self
+    public function setAriaAttributes(array $ariaAttributes, string $rad = ""): self
     {
         foreach ($ariaAttributes as $ariaAttribute => $value) {
-            $this->setAriaAttribute($ariaAttribute, $value);
+            if (is_array($value)) {
+                $this->setDataAttributes($value, $ariaAttribute . '-');
+                continue;
+            }
+            $this->setAriaAttribute($rad . $ariaAttribute, $value);
         }
 
         return $this;
     }
 
-    public function setAriaAttribute(string $aria, string | array $value): self
+    public function setAriaAttribute(string $aria, string $value): self
     {
-        return $this->setParameter("aria-{$aria}", $value);
+        $this->parametersAria[$aria] = $value;
+        return $this;
     }
 
-    public function setAria(string $aria, string | array $value): self
+    public function setAria(string $aria, string $value): self
     {
         return $this->setAriaAttribute($aria, $value);
     }
@@ -414,13 +435,13 @@ class TAG
         return $this->name ?? null;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
         return $this;
     }
 
-    public function name(string $name): self
+    public function name(?string $name): self
     {
         return $this->setName($name);
     }
@@ -430,22 +451,22 @@ class TAG
         return $this->parameters['title'] ?? null;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         return $this->setParameter('title', $title);
     }
 
-    public function title(string $title): self
+    public function title(?string $title): self
     {
         return $this->setTitle($title);
     }
 
-    public function setAlt(string $alt): self
+    public function setAlt(?string $alt): self
     {
         return $this->setParameter('alt', $alt);
     }
 
-    public function alt(string $alt): self
+    public function alt(?string $alt): self
     {
         return $this->setAlt($alt);
     }
@@ -468,22 +489,22 @@ class TAG
 
     public static function meta(string $name, string $value, ...$args): META
     {
-        return new META($name, $value, $args);
+        return new META($name, $value, ...$args);
     }
 
     public static function link(?string $href = null, ?string $rel = null, ?string $type = null, ...$args): LINK
     {
-        return new LINK($href, $rel, $type, $args);
+        return new LINK($href, $rel, $type, ...$args);
     }
 
     public static function script(?string $src = null, ?string $type = null, ?string $code = null, ...$args): SCRIPT
     {
-        return new SCRIPT($src, $type, $code, $args);
+        return new SCRIPT($src, $type, $code, ...$args);
     }
 
     public static function style(?string $src = null, ?string $code = null, ...$args): STYLE
     {
-        return new STYLE($src, $code, $args);
+        return new STYLE($src, $code, ...$args);
     }
 
     public static function head(...$args): HEAD
@@ -498,121 +519,151 @@ class TAG
 
     public static function div(?string $class = null, ?string $id = null, ?string $html = null, ...$args): DIV
     {
-        return new DIV($class, $id, $html, $args);
+        return new DIV($class, $id, $html, ...$args);
     }
 
-    public static function nav(?string $class = null, ?string $id = null, mixed $html = null, ...$args): NAV
+    public static function nav(?string $class = null, ?string $id = null, ?string $html = null, ...$args): NAV
     {
-        return new NAV($class, $id, $html, $args);
+        return new NAV($class, $id, $html, ...$args);
     }
 
-    public static function header(?string $class = null, ?string $id = null, mixed $html = null, ...$args): HEADER
+    public static function header(?string $class = null, ?string $id = null, ?string $html = null, ...$args): HEADER
     {
-        return new HEADER($class, $id, $html, $args);
+        return new HEADER($class, $id, $html, ...$args);
     }
 
-    public static function footer(?string $class = null, ?string $id = null, mixed $html = null, ...$args): FOOTER
+    public static function footer(?string $class = null, ?string $id = null, ?string $html = null, ...$args): FOOTER
     {
-        return new FOOTER($class, $id, $html, $args);
+        return new FOOTER($class, $id, $html, ...$args);
     }
 
     public static function form(?string $class = null, ?string $action = null, ?string $method = null, ?string $id = null, mixed $html = null, ...$args): FORM
     {
-        return new FORM($class, $action, $method, $id, $html, $args);
+        return new FORM($class, $action, $method, $id, $html, ...$args);
     }
 
-    public static function table(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TABLE
+    public static function table(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TABLE
     {
-        return new TABLE($class, $id, $html, $args);
+        return new TABLE($class, $id, $html, ...$args);
     }
 
-    public static function thead(?string $class = null, ?string $id = null, mixed $append = null, ...$args): THEAD
+    public static function thead(?string $class = null, ?string $id = null, ?string $html = null, ...$args): THEAD
     {
-        return new THEAD($class, $id, $append, $args);
+        return new THEAD($class, $id, $html, ...$args);
     }
 
-    public static function tbody(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TBODY
+    public static function tbody(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TBODY
     {
-        return new TBODY($class, $id, $html, $args);
+        return new TBODY($class, $id, $html, ...$args);
     }
 
-    public static function tfoot(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TFOOT
+    public static function tfoot(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TFOOT
     {
-        return new TFOOT($class, $id, $html, $args);
+        return new TFOOT($class, $id, $html, ...$args);
     }
 
-    public static function tr(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TR
+    public static function tr(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TR
     {
-        return new TR($class, $id, $html, $args);
+        return new TR($class, $id, $html, ...$args);
     }
 
-    public static function th(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TH
+    public static function th(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TH
     {
-        return new TH($class, $id, $html, $args);
+        return new TH($class, $id, $html, ...$args);
     }
 
-    public static function td(?string $class = null, ?string $id = null, mixed $html = null, ...$args): TD
+    public static function td(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TD
     {
-        return new TD($class, $id, $html, $args);
+        return new TD($class, $id, $html, ...$args);
     }
 
-    public static function h1(?string $class = null, mixed $append = null, ...$args): H1
+    public static function h1(?string $class = null, ?string $html = null, ...$args): H1
     {
-        return new H1($class, $append, $args);
+        return new H1($class, $html, ...$args);
     }
 
-    public static function h2(?string $class = null, mixed $append = null, ...$args): H2
+    public static function h2(?string $class = null, ?string $html = null, ...$args): H2
     {
-        return new H2($class, $append, $args);
+        return new H2($class, $html, ...$args);
     }
 
-    public static function h3(?string $class = null, mixed $append = null, ...$args): H3
+    public static function h3(?string $class = null, ?string $html = null, ...$args): H3
     {
-        return new H3($class, $append, $args);
+        return new H3($class, $html, ...$args);
     }
 
-    public static function h4(?string $class = null, mixed $append = null, ...$args): H4
+    public static function h4(?string $class = null, ?string $html = null, ...$args): H4
     {
-        return new H4($class, $append, $args);
+        return new H4($class, $html, ...$args);
     }
 
-    public static function h5(?string $class = null, mixed $append = null, ...$args): H5
+    public static function h5(?string $class = null, ?string $html = null, ...$args): H5
     {
-        return new H5($class, $append, $args);
+        return new H5($class, $html, ...$args);
     }
 
-    public static function h6(?string $class = null, mixed $append = null, ...$args): H6
+    public static function h6(?string $class = null, ?string $html = null, ...$args): H6
     {
-        return new H6($class, $append, $args);
+        return new H6($class, $html, ...$args);
     }
 
-    public static function hr(): HR
+    public static function hr(?string $class = null, ...$args): HR
     {
-        return new HR();
+        return new HR($class, ...$args);
     }
 
-    public static function a(...$args): A
+    public static function i(?string $class = null, ...$args): I
     {
-        return new A(...$args);
+        return new I($class, ...$args);
     }
 
-    public static function p(?string $class = null, ?string $id = null, mixed $append = null, ...$args): P
+    public static function b(?string $class = null, ...$args): B
     {
-        return new P($class, $id, $append, $args);
+        return new B($class, ...$args);
     }
 
-    public static function ul(...$args): UL
+    public static function span(?string $class = null, ...$args): SPAN
     {
-        return new UL(...$args);
+        return new SPAN($class, ...$args);
     }
 
-    public static function ol(...$args): OL
+    public static function strong(?string $class = null, ...$args): STRONG
     {
-        return new OL(...$args);
+        return new STRONG($class, ...$args);
     }
 
-    public static function li(...$args): LI
+    public static function a(?string $href = null, ?string $html = null, ?string $class = null, ?string $id = null, ...$args): A
     {
-        return new LI(...$args);
+        return new A($href, $html, $class, $id, ...$args);
+    }
+
+    public static function p(?string $class = null, ?string $id = null, ?string $html = null, ...$args): P
+    {
+        return new P($class, $id, $html, ...$args);
+    }
+
+    public static function ul(?string $class = null, ?string $id = null, ?string $html = null, ...$args): UL
+    {
+        return new UL($class, $id, $html, ...$args);
+    }
+
+    public static function ol(?string $class = null, ?string $id = null, ?string $html = null, ...$args): OL
+    {
+        return new OL($class, $id, $html, ...$args);
+    }
+
+    public static function li(?string $class = null, ?string $id = null, ?string $html = null, ...$args): LI
+    {
+        return new LI($class, $id, $html, ...$args);
+    }
+
+    public static function button(?string $class = null, ?string $id = null, ?string $name = null, ?string $html = null, ?string $value = null, ?string $type = 'button', ...$args): BUTTON
+    {
+        return new BUTTON($class, $id, $name, $html, $value, $type, ...$args);
+    }
+
+    public static function input(?string $class = null, ?string $id = null, ?string $name = null, ?string $value = null, ?string $type = 'text', ...$args): INPUT
+    {
+        return new INPUT($class, $id, $name, $value, $type, ...$args);
     }
 }

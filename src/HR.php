@@ -7,10 +7,12 @@ namespace PHTML;
  */
 class HR extends TAG
 {
-    public function __construct()
+    public function __construct(?string $class = null, ...$args)
     {
         $this->setTagType('hr');
-        $this->setAllowParameter(false);
         $this->setAllowContent(false);
+
+        $this->setParameter('class', $class);
+        $this->setParameters($args);
     }
 }

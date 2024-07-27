@@ -12,26 +12,11 @@ class INPUT_SUBMIT extends TAG
         $this->setTagType('input');
         $this->setAllowContent(false);
 
-        $arguments = $args ?? [];
-
-        if (!empty($class)) {
-            $arguments['class'] = $class;
-        }
-
-        if (!empty($id)) {
-            $arguments['id'] = $id;
-        }
-
-        if (!empty($name)) {
-            $arguments['name'] = $name;
-        }
-
-        if (!empty($value)) {
-            $arguments['value'] = $value;
-        }
-
-        $arguments['type'] = "submit";
-
-        $this->setParameters($arguments);
+        $this->setParameter('type', 'submit');
+        $this->setParameter('class', $class);
+        $this->setParameter('id', $id);
+        $this->setParameter('name', $name);
+        $this->setParameter('value', $value);
+        $this->setParameters($args);
     }
 }

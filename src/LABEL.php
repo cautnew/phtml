@@ -7,28 +7,14 @@ namespace PHTML;
  */
 class LABEL extends TAG
 {
-    public function __construct(?string $class = null, ?string $id = null, ?string $for = null, mixed $append = null, ...$args)
+    public function __construct(?string $class = null, ?string $id = null, ?string $for = null, ?string $html = null, ...$args)
     {
         $this->setTagType('label');
 
-        $arguments = $args ?? [];
-
-        if (!empty($class)) {
-            $arguments['class'] = $class;
-        }
-
-        if (!empty($id)) {
-            $arguments['id'] = $id;
-        }
-
-        if (!empty($for)) {
-            $arguments['for'] = $for;
-        }
-
-        if (!empty($append)) {
-            $arguments['append'] = $append;
-        }
-
-        $this->setParameters($arguments);
+        $this->setParameter('class', $class);
+        $this->setParameter('id', $id);
+        $this->setParameter('for', $for);
+        $this->setParameter('html', $html);
+        $this->setParameters($args);
     }
 }
