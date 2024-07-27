@@ -59,6 +59,16 @@ class FA extends TAG
     return new ICON_DEF_EDIT($class, ...$args);
   }
 
+  public static function iconDefCopy(?string $class = null, ...$args): ICON_DEF_COPY
+  {
+    return new ICON_DEF_COPY($class, ...$args);
+  }
+
+  public static function iconDefView(?string $class = null, ...$args): ICON_DEF_VIEW
+  {
+    return new ICON_DEF_VIEW($class, ...$args);
+  }
+
   public static function iconFloppyDisk(?string $class = null, ...$args): ICON_FLOPPY_DISK
   {
     return new ICON_FLOPPY_DISK($class, ...$args);
