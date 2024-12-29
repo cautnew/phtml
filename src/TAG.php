@@ -491,7 +491,7 @@ class TAG
         return new TITLE($title);
     }
 
-    public static function meta(string $name, string $value, ...$args): META
+    public static function meta(string $name='', string $value='', ...$args): META
     {
         return new META($name, $value, ...$args);
     }
