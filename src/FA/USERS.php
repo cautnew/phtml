@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_TABLE extends FA
+class USERS extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_TABLE extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-table');
+    $this->addClass('fa-solid fa-users');
 
     return parent::render();
   }

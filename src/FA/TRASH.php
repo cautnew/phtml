@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_FLOPPY_DISK extends FA
+class TRASH extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_FLOPPY_DISK extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-floppy-disk');
+    $this->addClass('fa-solid fa-trash');
 
     return parent::render();
   }

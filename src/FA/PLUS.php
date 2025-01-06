@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_CIRCLE_CHECK extends FA
+class PLUS extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_CIRCLE_CHECK extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-circle-check');
+    $this->addClass('fa-solid fa-plus');
 
     return parent::render();
   }

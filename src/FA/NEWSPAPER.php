@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_CIRCLE extends FA
+class NEWSPAPER extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_CIRCLE extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-circle');
+    $this->addClass('fa-solid fa-newspaper');
 
     return parent::render();
   }

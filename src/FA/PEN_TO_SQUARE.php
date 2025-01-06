@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_COPY extends FA
+class PEN_TO_SQUARE extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_COPY extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-copy');
+    $this->addClass('fa-solid fa-pen-to-square');
 
     return parent::render();
   }

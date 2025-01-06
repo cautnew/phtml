@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-class ICON_TRASH extends FA
+class TABLE extends FA
 {
   public function __construct(?string $class = null, ...$args)
   {
@@ -20,7 +20,7 @@ class ICON_TRASH extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-trash');
+    $this->addClass('fa-solid fa-table');
 
     return parent::render();
   }

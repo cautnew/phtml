@@ -2,8 +2,10 @@
 
 namespace PHTML\FA;
 
-class ICON_USERS extends FA
+class ICON extends FA
 {
+  public string $class;
+
   public function __construct(?string $class = null, ...$args)
   {
     $this->setTagType('i');
@@ -20,7 +22,7 @@ class ICON_USERS extends FA
   {
     $this->setFixedClasses($this->getClassList());
     $this->clearClassList();
-    $this->addClass('fa-solid fa-users');
+    $this->addClass($this->class);
 
     return parent::render();
   }

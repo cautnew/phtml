@@ -39,73 +39,83 @@ class FA extends TAG
     return $this;
   }
 
-  public static function iconCircleCheck(?string $class = null, ...$args): ICON_CIRCLE_CHECK
+  public static function iconCircleCheck(?string $class = null, ...$args): CIRCLE_CHECK
   {
-    return new ICON_CIRCLE_CHECK($class, ...$args);
+    return new CIRCLE_CHECK($class, ...$args);
   }
 
-  public static function iconCircleXMark(?string $class = null, ...$args): ICON_CIRCLE_XMARK
+  public static function iconCircleXMark(?string $class = null, ...$args): CIRCLE_XMARK
   {
-    return new ICON_CIRCLE_XMARK($class, ...$args);
+    return new CIRCLE_XMARK($class, ...$args);
   }
 
-  public static function iconCircle($class = null, ...$args): ICON_CIRCLE
+  public static function iconCircle($class = null, ...$args): CIRCLE
   {
-    return new ICON_CIRCLE($class, ...$args);
+    return new CIRCLE($class, ...$args);
   }
 
-  public static function iconDefEdit(?string $class = null, ...$args): ICON_DEF_EDIT
+  public static function iconCopy(?string $class = null, ...$args): COPY
   {
-    return new ICON_DEF_EDIT($class, ...$args);
+    return new COPY($class, ...$args);
   }
 
-  public static function iconDefCopy(?string $class = null, ...$args): ICON_DEF_COPY
+  public static function iconCopyright(?string $class = null, ...$args): COPYRIGHT
   {
-    return new ICON_DEF_COPY($class, ...$args);
+    return new COPYRIGHT($class, ...$args);
   }
 
-  public static function iconDefView(?string $class = null, ...$args): ICON_DEF_VIEW
+  public static function iconDefEdit(?string $class = null, ...$args): DEF_EDIT
   {
-    return new ICON_DEF_VIEW($class, ...$args);
+    return new DEF_EDIT($class, ...$args);
   }
 
-  public static function iconFloppyDisk(?string $class = null, ...$args): ICON_FLOPPY_DISK
+  public static function iconDefCopy(?string $class = null, ...$args): DEF_COPY
   {
-    return new ICON_FLOPPY_DISK($class, ...$args);
+    return new DEF_COPY($class, ...$args);
   }
 
-  public static function iconHeart(?string $class = null, ...$args): ICON_HEART
+  public static function iconDefView(?string $class = null, ...$args): DEF_VIEW
   {
-    return new ICON_HEART($class, ...$args);
+    return new DEF_VIEW($class, ...$args);
   }
 
-  public static function iconNewspaper(?string $class = null, ...$args): ICON_NEWSPAPER
+  public static function iconFloppyDisk(?string $class = null, ...$args): FLOPPY_DISK
   {
-    return new ICON_NEWSPAPER($class, ...$args);
+    return new FLOPPY_DISK($class, ...$args);
   }
 
-  public static function iconPenToSquare(?string $class = null, ...$args): ICON_PEN_TO_SQUARE
+  public static function iconHeart(?string $class = null, ...$args): HEART
   {
-    return new ICON_PEN_TO_SQUARE($class, ...$args);
+    return new HEART($class, ...$args);
   }
 
-  public static function iconPlus(?string $class = null, ...$args): ICON_PLUS
+  public static function iconNewspaper(?string $class = null, ...$args): NEWSPAPER
   {
-    return new ICON_PLUS($class, ...$args);
+    return new NEWSPAPER($class, ...$args);
   }
 
-  public static function iconTable(?string $class = null, ...$args): ICON_TABLE
+  public static function iconPenToSquare(?string $class = null, ...$args): PEN_TO_SQUARE
   {
-    return new ICON_TABLE($class, ...$args);
+    return new PEN_TO_SQUARE($class, ...$args);
   }
 
-  public static function iconTrash(?string $class = null, ...$args): ICON_TRASH
+  public static function iconPlus(?string $class = null, ...$args): PLUS
   {
-    return new ICON_TRASH($class, ...$args);
+    return new PLUS($class, ...$args);
   }
 
-  public static function iconUsers(?string $class = null, ...$args): ICON_USERS
+  public static function iconTable(?string $class = null, ...$args): TABLE
   {
-    return new ICON_USERS($class, ...$args);
+    return new TABLE($class, ...$args);
+  }
+
+  public static function iconTrash(?string $class = null, ...$args): TRASH
+  {
+    return new TRASH($class, ...$args);
+  }
+
+  public static function iconUsers(?string $class = null, ...$args): USERS
+  {
+    return new USERS($class, ...$args);
   }
 }
