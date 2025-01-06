@@ -39,7 +39,7 @@ class TAG
         return self::render();
     }
 
-    public function render(): string
+    private function renderAppendBeforeList(): string
     {
         $html = "";
         if (!empty($this->appendBeforeList)) {
@@ -47,20 +47,92 @@ class TAG
                 $html .= $element;
             }
         }
+
+        return $html;
+    }
+
+    private function renderAppendAfterList(): string
+    {
+        $html = "";
+        if (!empty($this->appendAfterList)) {
+            foreach ($this->appendAfterList as $element) {
+                $html .= $element;
+            }
+        }
+
+        return $html;
+    }
+
+    private function renderAppendList(): string
+    {
+        $html = "";
+        foreach ($this->appendList as $element) {
+            $html .= $element;
+        }
+
+        return $html;
+    }
+
+    private function renderStartTag(): string
+    {
+        $html = $this->renderAppendBeforeList();
         $html .= "<{$this->tagType}";
 
+        return $html;
+    }
+
+    private function renderCloseTag(): string
+    {
+        if (!$this->isAllowContent()) {
+            return " />";
+        }
+
+        return "</{$this->tagType}>";
+    }
+
+    private function renderTagAttributes(): string
+    {
+        $html = $this->renderClasslist();
+        $html .= $this->renderId();
+        $html .= $this->renderName();
+        $html .= $this->renderParameters();
+        $html .= $this->renderDataParameters();
+        $html .= $this->renderAriaParameters();
+        $html .= $this->renderBooleanParameters();
+
+        return $html;
+    }
+
+    private function renderClasslist(): ?string
+    {
         if (!empty($this->classList)) {
-            $html .= " class=\"" . join(' ', $this->classList) . "\"";
+            return " class=\"" . join(' ', $this->classList) . "\"";
         }
 
+        return null;
+    }
+
+    private function renderId(): ?string
+    {
         if (!empty($this->id)) {
-            $html .= " id=\"{$this->getId()}\"";
+            return " id=\"{$this->getId()}\"";
         }
 
+        return null;
+    }
+
+    private function renderName(): ?string
+    {
         if (!empty($this->name)) {
-            $html .= " name=\"{$this->getName()}\"";
+            return " name=\"{$this->getName()}\"";
         }
 
+        return null;
+    }
+
+    private function renderParameters(): ?string
+    {
+        $html = "";
         foreach ($this->parameters as $parameter => $value) {
             if (is_array($value)) {
                 $value = join(' ', $value);
@@ -69,14 +141,32 @@ class TAG
             $html .= " {$parameter}=\"{$value}\"";
         }
 
+        return ($html !== "") ? $html : null;
+    }
+
+    private function renderDataParameters(): ?string
+    {
+        $html = "";
         foreach ($this->parametersData as $parameter => $value) {
             $html .= " data-{$parameter}=\"{$value}\"";
         }
 
+        return ($html !== "") ? $html : null;
+    }
+
+    private function renderAriaParameters(): ?string
+    {
+        $html = "";
         foreach ($this->parametersAria as $parameter => $value) {
             $html .= " aria-{$parameter}=\"{$value}\"";
         }
 
+        return ($html !== "") ? $html : null;
+    }
+
+    private function renderBooleanParameters(): ?string
+    {
+        $html = "";
         foreach ($this->parametersBoolean as $parameter => $value) {
             if ($value !== true) {
                 continue;
@@ -85,24 +175,25 @@ class TAG
             $html .= " {$parameter}";
         }
 
-        if (!$this->isAllowContent()) {
-            $html .= " />";
+        return ($html !== "") ? $html : null;
+    }
+
+    public function render(): string
+    {
+        $html = $this->renderStartTag();
+        $html .= $this->renderTagAttributes();
+
+        if ($this->isAllowContent()) {
+            $html .= ">";
+            $html .= $this->renderAppendList();
+            $html .= $this->renderCloseTag();
+            $html .= $this->renderAppendAfterList();
+
             return $html;
         }
 
-        $html .= ">";
-
-        foreach ($this->appendList as $element) {
-            $html .= $element;
-        }
-
-        $html .= "</{$this->tagType}>";
-
-        if (!empty($this->appendAfterList)) {
-            foreach ($this->appendAfterList as $element) {
-                $html .= $element;
-            }
-        }
+        $html .= $this->renderCloseTag();
+        $html .= $this->renderAppendAfterList();
 
         return $html;
     }
@@ -349,6 +440,11 @@ class TAG
             }
 
             return $this;
+        }
+
+        if (is_string($class) && strpos($class, ' ') !== false) {
+            $class = explode(' ', $class);
+            return $this->addClass($class);
         }
 
         if (in_array($class, $this->classList) || empty($class)) {
