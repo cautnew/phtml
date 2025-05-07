@@ -14,8 +14,8 @@ class TITLE extends TAG
         $this->setAllowParameter(false);
     }
 
-    public function append(TAG | string | array | null $content): self
+    public function append(TAG | string | array | null $content, bool $clear = true): self
     {
-        return $this->clearAppend($content);
+        return parent::append($content, true);
     }
 }

@@ -240,7 +240,7 @@ class TAG
         return $this;
     }
 
-    public function append(TAG | string | array | null $content): self
+    public function append(TAG | string | array | null $content, bool $clear = false): self
     {
         if (!$this->isAllowContent()) {
             throw new ContentNotAllowedException($this->tagType);
@@ -261,7 +261,11 @@ class TAG
             $content->setParent($this);
         }
 
-        $this->appendList[] = $content;
+        if ($clear) {
+            $this->appendList = [$content];
+        } else {
+            $this->appendList[] = $content;
+        }
 
         return $this;
     }
@@ -330,13 +334,9 @@ class TAG
         return $this;
     }
 
-    public function clearAppend(TAG | string | array | null $content = null): self
+    public function clearAppend(): self
     {
         $this->appendList = [];
-
-        if (!empty($content)) {
-            $this->append($content);
-        }
 
         return $this;
     }
