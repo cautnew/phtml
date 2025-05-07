@@ -23,13 +23,33 @@ class TAG
     private array $appendBeforeList = [];
 
     protected array $permAttr = [
-        'id', 'name', 'value', 'src', 'href', 'placeholder',
-        'style', 'width', 'height', 'max', 'min', 'title', 'alt',
-        'type', 'method', 'action'
+        'id',
+        'name',
+        'value',
+        'src',
+        'href',
+        'placeholder',
+        'style',
+        'width',
+        'height',
+        'max',
+        'min',
+        'title',
+        'alt',
+        'type',
+        'method',
+        'action'
     ];
     protected array $permBooleanAttr = [
-        'checked', 'disabled', 'multiple', 'readonly', 'required',
-        'selected', 'autoplay', 'muted', 'playsinline'
+        'checked',
+        'disabled',
+        'multiple',
+        'readonly',
+        'required',
+        'selected',
+        'autoplay',
+        'muted',
+        'playsinline'
     ];
     protected bool $allowParameter = true;
     protected bool $allowContent = true;
@@ -306,6 +326,17 @@ class TAG
             $content->setParent($this->getParent());
         }
         $this->appendAfterList[] = $content;
+
+        return $this;
+    }
+
+    public function clearAppend(TAG | string | array | null $content = null): self
+    {
+        $this->appendList = [];
+
+        if (!empty($content)) {
+            $this->append($content);
+        }
 
         return $this;
     }
@@ -587,7 +618,7 @@ class TAG
         return new TITLE($title);
     }
 
-    public static function meta(string $name='', string $value='', ...$args): META
+    public static function meta(string $name = '', string $value = '', ...$args): META
     {
         return new META($name, $value, ...$args);
     }
