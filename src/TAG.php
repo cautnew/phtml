@@ -123,10 +123,15 @@ class TAG
         return $html;
     }
 
+    private function renderProp(string $prop, string $value): string
+    {
+        return " {$prop}=\"{$value}\"";
+    }
+
     private function renderClasslist(): ?string
     {
         if (!empty($this->classList)) {
-            return " class=\"" . join(' ', $this->classList) . "\"";
+            return $this->renderProp('class', join(' ', $this->classList));
         }
 
         return null;
@@ -135,7 +140,7 @@ class TAG
     private function renderId(): ?string
     {
         if (!empty($this->id)) {
-            return " id=\"{$this->getId()}\"";
+            return $this->renderProp('id', $this->getId());
         }
 
         return null;
@@ -144,7 +149,7 @@ class TAG
     private function renderName(): ?string
     {
         if (!empty($this->name)) {
-            return " name=\"{$this->getName()}\"";
+            return $this->renderProp('name', $this->getName());
         }
 
         return null;
@@ -158,7 +163,7 @@ class TAG
                 $value = join(' ', $value);
             }
 
-            $html .= " {$parameter}=\"{$value}\"";
+            $html .= $this->renderProp($parameter, $value);
         }
 
         return ($html !== "") ? $html : null;
@@ -168,7 +173,7 @@ class TAG
     {
         $html = "";
         foreach ($this->parametersData as $parameter => $value) {
-            $html .= " data-{$parameter}=\"{$value}\"";
+            $html .= $this->renderProp("data-{$parameter}", $value);
         }
 
         return ($html !== "") ? $html : null;
@@ -178,7 +183,7 @@ class TAG
     {
         $html = "";
         foreach ($this->parametersAria as $parameter => $value) {
-            $html .= " aria-{$parameter}=\"{$value}\"";
+            $html .= $this->renderProp("aria-{$parameter}", $value);
         }
 
         return ($html !== "") ? $html : null;
