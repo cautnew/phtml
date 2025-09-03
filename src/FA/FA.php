@@ -2,7 +2,7 @@
 
 namespace PHTML\FA;
 
-use PHTML\TAG;
+use PHTML\Core\TAG;
 
 class FA extends TAG
 {

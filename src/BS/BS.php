@@ -2,7 +2,7 @@
 
 namespace PHTML\BS;
 
-use PHTML\TAG;
+use PHTML\Core\TAG;
 
 class BS extends TAG
 {

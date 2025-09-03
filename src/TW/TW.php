@@ -2,7 +2,7 @@
 
 namespace PHTML\TW;
 
-use PHTML\TAG;
+use PHTML\Core\TAG;
 
 /*
  * Tailwind CSS
