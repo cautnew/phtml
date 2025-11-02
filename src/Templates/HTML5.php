@@ -88,13 +88,13 @@ class HTML5
         $this->head = new HEAD();
     }
 
-    private function appendToHtml(TAG $tag): self
+    public function appendToHtml(TAG $tag): self
     {
         $this->html()->append($tag);
         return $this;
     }
 
-    private function appendToHead(TAG $tag): self
+    public function appendToHead(TAG $tag): self
     {
         $this->head()->append($tag);
         return $this;
