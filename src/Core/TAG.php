@@ -9,6 +9,8 @@ class TAG
 {
     private TAG $parent;
 
+    private ?string $compileName = null;
+
     private ?string $tagType;
     private ?string $id;
     private ?string $name;
@@ -29,6 +31,7 @@ class TAG
         'src',
         'href',
         'placeholder',
+        'data',
         'style',
         'width',
         'height',
@@ -62,6 +65,34 @@ class TAG
     public function __clone()
     {
         unset($this->parent);
+    }
+
+    public function compile(?string $compileName = null)
+    {
+        if (empty($compileName)) {
+            $compileName = $this->compileName;
+        }
+    }
+
+    public function hasCompilation(): bool
+    {
+        return false;
+    }
+
+    public function getCompileName(): ?string
+    {
+        if (!isset($this->compileName)) {
+            return null;
+        }
+
+        return $this->compileName;
+    }
+
+    public function setCompileName(?string $compileName = null): self
+    {
+        $this->compileName = $compileName;
+
+        return $this;
     }
 
     private function renderAppendBeforeList(): string
@@ -697,9 +728,29 @@ class TAG
         return new FOOTER($class, $id, $html, ...$args);
     }
 
+    public static function section(?string $class = null, ?string $id = null, ?string $html = null, ...$args): SECTION
+    {
+        return new SECTION($class, $id, $html, ...$args);
+    }
+
     public static function form(?string $class = null, ?string $action = null, ?string $method = null, ?string $id = null, mixed $html = null, ...$args): FORM
     {
         return new FORM($class, $action, $method, $id, $html, ...$args);
+    }
+
+    public static function img(?string $class = null, ?string $id = null, ?string $html = null, ...$args): IMG
+    {
+        return new IMG($class, $id, $html, ...$args);
+    }
+
+    public static function video(?string $class = null, ?string $id = null, ?string $html = null, ...$args): VIDEO
+    {
+        return new VIDEO($class, $id, $html, ...$args);
+    }
+
+    public static function canvas(?string $class = null, ?string $id = null, ?string $html = null, ...$args): CANVAS
+    {
+        return new CANVAS($class, $id, $html, ...$args);
     }
 
     public static function table(?string $class = null, ?string $id = null, ?string $html = null, ...$args): TABLE
