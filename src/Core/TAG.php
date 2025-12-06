@@ -718,6 +718,11 @@ class TAG
         return new NAV($class, $id, $html, ...$args);
     }
 
+    public static function main(?string $class = null, ?string $id = null, ?string $html = null, ...$args): MAIN
+    {
+        return new MAIN($class, $id, $html, ...$args);
+    }
+
     public static function header(?string $class = null, ?string $id = null, ?string $html = null, ...$args): HEADER
     {
         return new HEADER($class, $id, $html, ...$args);
