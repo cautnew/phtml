@@ -29,6 +29,10 @@ class HTML5
     private array $footerStyles;
     private array $footerScripts;
 
+    private $funcPreRenderHtml;
+    private array $funcsRenderHead;
+    private array $funcsRenderBody;
+
     public function __tostring()
     {
         return $this->render();
@@ -166,12 +170,43 @@ class HTML5
         return $this;
     }
 
+    public function preRenderHtml($func): self
+    {
+        $this->funcPreRenderHtml = $func;
+
+        return $this;
+    }
+
+    public function addRenderHead($func): self
+    {
+        if (!isset($this->funcsRenderHead))
+            $this->funcsRenderHead = [];
+
+        $this->funcsRenderHead[] = $func;
+
+        return $this;
+    }
+
+    public function addRenderBody($func): self
+    {
+        if (!isset($this->funcsRenderBody))
+            $this->funcsRenderBody = [];
+
+        $this->funcsRenderBody[] = $func;
+
+        return $this;
+    }
+
     public function render(): string
     {
         $this->html()->append([
             $this->head(),
             $this->body()
         ]);
+
+        if (isset($this->funcPreRenderHtml) && is_callable($this->funcPreRenderHtml)) {
+            $this->funcPreRenderHtml->call($this->getHtml());
+        }
 
         foreach ($this->headerMetaTags() as $headerMetaTag) {
             $this->appendToHead($headerMetaTag);
@@ -188,6 +223,23 @@ class HTML5
         if (isset($this->pageTitle)) {
             $this->title = new TITLE($this->pageTitle);
             $this->appendToHead($this->title);
+            $this->appendToHead(TAG::meta('title', $this->pageTitle));
+        }
+
+        if (isset($this->funcsRenderHead)) {
+            foreach ($this->funcsRenderHead as $func) {
+                if (is_callable($func)) {
+                    $func->call($this->getHead());
+                }
+            }
+        }
+
+        if (isset($this->funcsRenderBody)) {
+            foreach ($this->funcsRenderBody as $func) {
+                if (is_callable($func)) {
+                    $func->call($this->getBody());
+                }
+            }
         }
 
         return $this->html()->render();
