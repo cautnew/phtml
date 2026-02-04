@@ -838,6 +838,11 @@ class TAG
         return new B($class, ...$args);
     }
 
+    public static function small(?string $class = null, ...$args): SMALL
+    {
+        return new SMALL($class, ...$args);
+    }
+
     public static function span(?string $class = null, ...$args): SPAN
     {
         return new SPAN($class, ...$args);
