@@ -888,12 +888,22 @@ class TAG
         return new LABEL($class, $id, $for, $html, ...$args);
     }
 
-    public static function input(?string $class = null, ?string $id = null, ?string $name = null, ?string $value = null, ?string $type = 'text', ...$args): INPUT
+    public static function select(?string $class = null, ?string $id = null, ?string $for = null, ?string $html = null, mixed ...$args): SELECT
+    {
+        return new SELECT($class, $id, $for, $html, ...$args);
+    }
+
+    public static function input(?string $class = null, ?string $id = null, ?string $name = null, ?string $value = null, ?string $type = 'text', mixed ...$args): INPUT
     {
         return new INPUT($class, $id, $name, $value, $type, ...$args);
     }
 
-    public static function textarea(?string $class = null, ?string $id = null, ?string $name = null, mixed $placeholder = null, ?string $html = null, ...$args): TEXTAREA
+    public static function option(string $value, string $text, mixed ...$args): OPTION
+    {
+        return new OPTION($value, $text, ...$args);
+    }
+
+    public static function textarea(?string $class = null, ?string $id = null, ?string $name = null, mixed $placeholder = null, ?string $html = null, mixed ...$args): TEXTAREA
     {
         return new TEXTAREA($class, $id, $name, $placeholder, $html, ...$args);
     }
