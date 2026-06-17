@@ -23,6 +23,7 @@ class TAG
     private array $appendList = [];
     private array $appendAfterList = [];
     private array $appendBeforeList = [];
+    private array $styleAttributes = [];
 
     protected array $permAttr = [
         'id',
@@ -53,6 +54,38 @@ class TAG
         'autoplay',
         'muted',
         'playsinline'
+    ];
+    protected array $permStyleAttr = [
+        'caption-side',
+        'color',
+        'align-items',
+        'background-color',
+        'font-size',
+        'font-weight',
+        'text-align',
+        'text-decoration',
+        'border',
+        'border-radius',
+        'margin',
+        'margin-top',
+        'margin-right',
+        'margin-bottom',
+        'margin-left',  
+        'padding',
+        'padding-top',
+        'padding-right',
+        'padding-bottom',
+        'padding-left',
+        'width',
+        'height',
+        'display',
+        'position',
+        'float',
+        'clear',
+        'top',
+        'right',
+        'bottom',
+        'left'
     ];
     protected bool $allowParameter = true;
     protected bool $allowContent = true;
@@ -152,6 +185,7 @@ class TAG
         $html .= $this->renderId();
         $html .= $this->renderName();
         $html .= $this->renderParameters();
+        $html .= $this->renderStyleAttributes();
         $html .= $this->renderDataParameters();
         $html .= $this->renderAriaParameters();
         $html .= $this->renderBooleanParameters();
@@ -203,6 +237,16 @@ class TAG
         }
 
         return ($html !== "") ? $html : null;
+    }
+
+    private function renderStyleAttributes(): ?string
+    {
+        $html = "";
+        foreach ($this->styleAttributes as $parameter => $value) {
+            $html .= "{$parameter}: {$value};";
+        }
+
+        return ($html !== "") ? $this->renderProp('style', $html) : null;
     }
 
     private function renderDataParameters(): ?string
@@ -503,6 +547,46 @@ class TAG
         $this->parameters[$parameter] = $value;
 
         return $this;
+    }
+
+    public function setAttribute(string $parameter, mixed $value): self
+    {
+        return $this->setParameter($parameter, $value);
+    }
+
+    public function attribute(string $parameter, mixed $value): self
+    {
+        return $this->setParameter($parameter, $value);
+    }
+
+    public function setStyleParameter(string $parameter, string $value): self
+    {
+        if (!in_array($parameter, $this->permStyleAttr)) {
+            throw new ParametersNotAllowedException($this->tagType);
+        }
+
+        $this->styleAttributes[$parameter] = $value;
+
+        return $this;
+    }
+
+    public function setStyleParameters(array $parameters): self
+    {
+        foreach ($parameters as $parameter => $value) {
+            $this->setStyleParameter($parameter, $value);
+        }
+
+        return $this;
+    }
+
+    public function setStyle(string $parameter, string $value): self
+    {
+        return $this->setStyleParameter($parameter, $value);
+    }
+
+    public function styleParam(string $parameter, string $value): self
+    {
+        return $this->setStyleParameter($parameter, $value);
     }
 
     public function getClassList(): array
