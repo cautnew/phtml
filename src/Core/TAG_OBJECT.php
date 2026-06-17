@@ -5,7 +5,7 @@ namespace PHTML\Core;
 /**
  * Class OBJECT
  */
-class OBJECT extends TAG
+class TAG_OBJECT extends TAG
 {
     public function __construct(...$args)
     {
