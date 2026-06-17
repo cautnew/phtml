@@ -2,9 +2,13 @@
 
 namespace PHTML\BS;
 
+use PHTML\ComponentInterface;
 use PHTML\Core\TAG;
 
-class BS extends TAG
+/**
+ * Core for BS 5 components
+ */
+class BS extends TAG implements ComponentInterface
 {
   private array $fixedClasses;
 
