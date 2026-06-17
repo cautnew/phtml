@@ -5,12 +5,11 @@ namespace PHTML\Core;
 /**
  * Class META
  */
-class META extends TAG
+class META extends NONCONTENTTAG
 {
     public function __construct(string $name = '', string $value = '', ...$args)
     {
         $this->setTagType('meta');
-        $this->setAllowContent(false);
 
         if (!empty($name)) {
             $this->setParameter('name', $name);

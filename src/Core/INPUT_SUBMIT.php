@@ -5,18 +5,10 @@ namespace PHTML\Core;
 /**
  * Class INPUT_SUBMIT
  */
-class INPUT_SUBMIT extends TAG
+class INPUT_SUBMIT extends INPUT
 {
     public function __construct(?string $class = null, ?string $id = null, ?string $name = null, mixed $value = null, ...$args)
     {
-        $this->setTagType('input');
-        $this->setAllowContent(false);
-
-        $this->setParameter('type', 'submit');
-        $this->setParameter('class', $class);
-        $this->setParameter('id', $id);
-        $this->setParameter('name', $name);
-        $this->setParameter('value', $value);
-        $this->setParameters($args);
+        parent::__construct($class, $id, $name, $value, 'submit', ...$args);
     }
 }

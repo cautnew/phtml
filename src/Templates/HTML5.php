@@ -2,6 +2,7 @@
 
 namespace PHTML\Templates;
 
+use PHTML\TemplateInterface;
 use PHTML\Core\BODY;
 use PHTML\Core\HEAD;
 use PHTML\Core\HTML;
@@ -9,96 +10,59 @@ use PHTML\Core\LINK;
 use PHTML\Core\META;
 use PHTML\Core\SCRIPT;
 use PHTML\Core\TAG;
+use PHTML\Core\NONCONTENTTAG;
 use PHTML\Core\TITLE;
 
 /**
  * Principal format of a HTML page
  */
-class HTML5
+class HTML5 implements TemplateInterface
 {
     private HTML $html;
     private HEAD $head;
     private BODY $body;
-    private TITLE $title;
 
-    private string $pageTitle;
-    private array $headerMetaTags;
-    private array $headerLinks;
-    private array $headerStyles;
-    private array $headerScripts;
-    private array $footerStyles;
-    private array $footerScripts;
+    private string $pageTitle = '';
+    private array $headerMetaTags = [];
+    private array $headerLinks = [];
+    private array $headerScripts = [];
+    private array $renderHeadCallbacks = [];
+    private array $renderBodyCallbacks = [];
+    private ?\Closure $preRenderHtmlCallback = null;
 
-    private $funcPreRenderHtml;
-    private array $funcsRenderHead;
-    private array $funcsRenderBody;
-
-    public function __tostring()
+    public function __toString(): string
     {
         return $this->render();
     }
 
     public function html(): HTML
     {
-        if (!isset($this->html)) {
-            $this->html = new HTML();
-        }
-
-        return $this->html;
-    }
-
-    public function getHtml(): HTML
-    {
-        return $this->html();
+        return $this->html ??= new HTML();
     }
 
     public function head(): HEAD
     {
-        if (!isset($this->head)) {
-            $this->head = new HEAD();
-        }
-
-        return $this->head;
-    }
-
-    public function getHead(): HEAD
-    {
-        return $this->head();
+        return $this->head ??= new HEAD();
     }
 
     public function body(): BODY
     {
-        if (!isset($this->body)) {
-            $this->body = new BODY();
-        }
-
-        return $this->body;
-    }
-
-    public function getBody(): BODY
-    {
-        return $this->body();
+        return $this->body ??= new BODY();
     }
 
     public function setPageTitle(string $pageTitle): self
     {
         $this->pageTitle = $pageTitle;
-
         return $this;
     }
 
-    private function renderHead(): void
-    {
-        $this->head = new HEAD();
-    }
-
-    public function appendToHtml(TAG $tag): self
+    public function appendToHtml(TAG | NONCONTENTTAG $tag): self
     {
         $this->html()->append($tag);
         return $this;
     }
 
-    public function appendToHead(TAG $tag): self
+    public function appendToHead(TAG | NONCONTENTTAG $tag): self
     {
         $this->head()->append($tag);
         return $this;
@@ -106,142 +70,151 @@ class HTML5
 
     public function headerMetaTags(): array
     {
-        if (!isset($this->headerMetaTags)) {
-            $this->headerMetaTags = [];
-        }
-
         return $this->headerMetaTags;
-    }
-
-    public function getHeaderMetaTags(): array
-    {
-        return $this->headerMetaTags();
     }
 
     public function appendMetaTag(META $meta): self
     {
-        $this->headerMetaTags()[] = $meta;
+        $this->headerMetaTags[] = $meta;
         return $this;
     }
 
     public function headerLinks(): array
     {
-        if (!isset($this->headerLinks)) {
-            $this->headerLinks = [];
-        }
-
         return $this->headerLinks;
-    }
-
-    public function getHeaderLinks(): array
-    {
-        return $this->headerLinks();
     }
 
     public function appendLink(LINK $link): self
     {
-        $this->headerLinks()[] = $link;
+        $this->headerLinks[] = $link;
         return $this;
     }
 
     public function headerScripts(): array
     {
-        if (!isset($this->headerScripts)) {
-            $this->headerScripts = [];
-        }
-
         return $this->headerScripts;
-    }
-
-    public function getHeaderScripts(): array
-    {
-        return $this->headerScripts();
     }
 
     public function appendHeaderScript(SCRIPT $script): self
     {
-        $this->headerScripts()[] = $script;
+        $this->headerScripts[] = $script;
         return $this;
     }
 
-    public function appendToBody(TAG $tag): self
+    public function appendToBody(TAG | NONCONTENTTAG $tag): self
     {
         $this->body()->append($tag);
         return $this;
     }
 
-    public function preRenderHtml($func): self
+    public function preRenderHtml(callable $func): self
     {
-        $this->funcPreRenderHtml = $func;
-
+        $this->preRenderHtmlCallback = $func;
         return $this;
     }
 
-    public function addRenderHead($func): self
+    public function addRenderHead(callable $func): self
     {
-        if (!isset($this->funcsRenderHead))
-            $this->funcsRenderHead = [];
-
-        $this->funcsRenderHead[] = $func;
-
+        $this->renderHeadCallbacks[] = $func;
         return $this;
     }
 
-    public function addRenderBody($func): self
+    public function addRenderBody(callable $func): self
     {
-        if (!isset($this->funcsRenderBody))
-            $this->funcsRenderBody = [];
+        $this->renderBodyCallbacks[] = $func;
+        return $this;
+    }
 
-        $this->funcsRenderBody[] = $func;
-
+    public function addRendersBody(array $funcs): self
+    {
+        foreach ($funcs as $func) {
+            if (is_callable($func)) {
+                $this->renderBodyCallbacks[] = $func;
+            }
+        }
         return $this;
     }
 
     public function render(): string
     {
+        $this->assembleHtmlStructure();
+        $this->executePreRenderCallback();
+        $this->populateHead();
+        $this->executeHeadCallbacks();
+        $this->executeBodyCallbacks();
+
+        return $this->html()->render();
+    }
+
+    private function assembleHtmlStructure(): void
+    {
         $this->html()->append([
             $this->head(),
             $this->body()
         ]);
+    }
 
-        if (isset($this->funcPreRenderHtml) && is_callable($this->funcPreRenderHtml)) {
-            $this->funcPreRenderHtml->call($this->getHtml());
+    private function executePreRenderCallback(): void
+    {
+        if ($this->preRenderHtmlCallback instanceof \Closure) {
+            $this->preRenderHtmlCallback->call($this->html());
+        }
+    }
+
+    private function populateHead(): void
+    {
+        $this->appendMetaTagsToHead();
+        $this->appendScriptsToHead();
+        $this->appendLinksToHead();
+        $this->appendPageTitleToHead();
+    }
+
+    private function appendMetaTagsToHead(): void
+    {
+        foreach ($this->headerMetaTags as $metaTag) {
+            $this->appendToHead($metaTag);
+        }
+    }
+
+    private function appendScriptsToHead(): void
+    {
+        foreach ($this->headerScripts as $script) {
+            $this->appendToHead($script);
+        }
+    }
+
+    private function appendLinksToHead(): void
+    {
+        foreach ($this->headerLinks as $link) {
+            $this->appendToHead($link);
+        }
+    }
+
+    private function appendPageTitleToHead(): void
+    {
+        if (empty($this->pageTitle)) {
+            return;
         }
 
-        foreach ($this->headerMetaTags() as $headerMetaTag) {
-            $this->appendToHead($headerMetaTag);
-        }
+        $this->appendToHead(new TITLE($this->pageTitle));
+        $this->appendToHead(TAG::meta('title', $this->pageTitle));
+    }
 
-        foreach ($this->headerScripts() as $headerScript) {
-            $this->appendToHead($headerScript);
-        }
-
-        foreach ($this->headerLinks() as $headerLink) {
-            $this->appendToHead($headerLink);
-        }
-
-        if (isset($this->pageTitle)) {
-            $this->title = new TITLE($this->pageTitle);
-            $this->appendToHead($this->title);
-            $this->appendToHead(TAG::meta('title', $this->pageTitle));
-        }
-
-        if (isset($this->funcsRenderHead)) {
-            foreach ($this->funcsRenderHead as $func) {
-                if (is_callable($func)) {
-                    $func->call($this->getHead());
-                }
+    private function executeHeadCallbacks(): void
+    {
+        foreach ($this->renderHeadCallbacks as $callback) {
+            if ($callback instanceof \Closure) {
+                $callback->call($this->head());
             }
         }
+    }
 
-        if (isset($this->funcsRenderBody)) {
-            foreach ($this->funcsRenderBody as $func) {
-                if (is_callable($func)) {
-                    $func->call($this->getBody());
-                }
+    private function executeBodyCallbacks(): void
+    {
+        foreach ($this->renderBodyCallbacks as $callback) {
+            if ($callback instanceof \Closure) {
+                $callback->call($this->body());
             }
         }
-
-        return $this->html()->render();
     }
 }

@@ -5,19 +5,20 @@ namespace PHTML\Core;
 /**
  * Class INPUT_TEXT
  */
-class INPUT_TEXT extends TAG
+class INPUT_TEXT extends INPUT
 {
+    /**
+     * Create a new INPUT TEXT TYPE tag.
+     * @param mixed $class
+     * @param mixed $id
+     * @param mixed $name
+     * @param mixed $placeholder
+     * @param mixed $value
+     * @param array $args
+     */
     public function __construct(?string $class = null, ?string $id = null, ?string $name = null, ?string $placeholder = null, ?string $value = null, ...$args)
     {
-        $this->setTagType('input');
-        $this->setAllowContent(false);
-
-        $this->setParameter('type', 'text');
-        $this->setParameter('class', $class);
-        $this->setParameter('id', $id);
-        $this->setParameter('name', $name);
+        parent::__construct($class, $id, $name, $value, 'text', ...$args);
         $this->setParameter('placeholder', $placeholder);
-        $this->setParameter('value', $value);
-        $this->setParameters($args);
     }
 }

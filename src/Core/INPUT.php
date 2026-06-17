@@ -5,12 +5,20 @@ namespace PHTML\Core;
 /**
  * Class INPUT
  */
-class INPUT extends TAG
+class INPUT extends NONCONTENTTAG
 {
+    /**
+     * Create a new INPUT tag.
+     * @param mixed $class
+     * @param mixed $id
+     * @param mixed $name
+     * @param mixed $value
+     * @param mixed $type
+     * @param array $args
+     */
     public function __construct(?string $class = null, ?string $id = null, ?string $name = null, ?string $value = null, ?string $type = 'text', ...$args)
     {
         $this->setTagType('input');
-        $this->setAllowContent(false);
 
         $this->setParameter('type', $type);
         $this->setParameter('class', $class);
