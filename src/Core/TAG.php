@@ -713,7 +713,12 @@ class TAG
         return new DIV($class, $id, $html, ...$args);
     }
 
-    public static function nav(?string $class = null, ?string $id = null, ?string $html = null, ...$args): NAV
+    public static function fieldset(?string $class = null, ?string $id = null, ?string $html = null, mixed ...$args): FIELDSET
+    {
+        return new FIELDSET($class, $id, $html, ...$args);
+    }
+
+    public static function nav(?string $class = null, ?string $id = null, ?string $html = null, mixed ...$args): NAV
     {
         return new NAV($class, $id, $html, ...$args);
     }
@@ -723,7 +728,12 @@ class TAG
         return new MAIN($class, $id, $html, ...$args);
     }
 
-    public static function header(?string $class = null, ?string $id = null, ?string $html = null, ...$args): HEADER
+    public static function article(?string $class = null, ?string $id = null, ?string $html = null, mixed ...$args): ARTICLE
+    {
+        return new ARTICLE($class, $id, $html, ...$args);
+    }
+
+    public static function header(?string $class = null, ?string $id = null, ?string $html = null, mixed ...$args): HEADER
     {
         return new HEADER($class, $id, $html, ...$args);
     }
@@ -886,6 +896,16 @@ class TAG
     public static function label(?string $class = null, ?string $id = null, ?string $for = null, ?string $html = null, ...$args): LABEL
     {
         return new LABEL($class, $id, $for, $html, ...$args);
+    }
+
+    public static function legend(?string $class = null, ?string $html = null, mixed ...$args): LEGEND
+    {
+        return new LEGEND($class, $html, ...$args);
+    }
+
+    public static function caption(?string $class = null, ?string $id = null, ?string $side = null, ?string $align = null, ?string $html = null, mixed ...$args): CAPTION
+    {
+        return new CAPTION($class, $id, $side, $align, $html, ...$args);
     }
 
     public static function select(?string $class = null, ?string $id = null, ?string $for = null, ?string $html = null, mixed ...$args): SELECT
