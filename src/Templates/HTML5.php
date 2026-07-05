@@ -107,19 +107,19 @@ class HTML5 implements TemplateInterface
         return $this;
     }
 
-    public function preRenderHtml(callable $func): self
+    public function preRenderHtml(\Closure $func): self
     {
         $this->preRenderHtmlCallback = $func;
         return $this;
     }
 
-    public function addRenderHead(callable $func): self
+    public function addRenderHead(\Closure $func): self
     {
         $this->renderHeadCallbacks[] = $func;
         return $this;
     }
 
-    public function addRenderBody(callable $func): self
+    public function addRenderBody(\Closure $func): self
     {
         $this->renderBodyCallbacks[] = $func;
         return $this;
