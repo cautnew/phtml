@@ -157,7 +157,7 @@ class HTML5 implements TemplateInterface
     private function executePreRenderCallback(): void
     {
         if ($this->preRenderHtmlCallback instanceof \Closure) {
-            $this->preRenderHtmlCallback->call($this->html());
+            $this->preRenderHtmlCallback->call($this, $this);
         }
     }
 
