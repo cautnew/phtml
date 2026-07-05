@@ -17,7 +17,7 @@ It's possible to write HTML as a string, _but why?_
 To use the `PHTML` class, simply include the class file in your PHP project:
 
 ```php
-use PHTML/Core/TAG;
+use CN\PHTML/Core/TAG;
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ The `SCRIPT` object allows you to create a `<script>` tag easily. Below is an ex
 ```php
 <?php
 
-use PHTML/Core/TAG;
+use CN\PHTML/Core/TAG;
 
 // Create a DIV object
 $div = TAG::div();
@@ -55,7 +55,7 @@ You can also create a `<script>` tag with inline JavaScript code:
 ```php
 <?php
 
-use PHTML/Core/TAG;
+use CN\PHTML/Core/TAG;
 
 // Create a SCRIPT object
 $script = TAG::script();
@@ -75,7 +75,7 @@ You can also append one tag to other:
 ```php
 <?php
 
-use PHTML/DIV;
+use CN\PHTML/DIV;
 
 // Create DIV objects
 $div1 = new DIV('div-main', 'div-1');
@@ -96,7 +96,7 @@ You can also append one tag to other and edit it's parameters and content before
 ```php
 <?php
 
-use PHTML/DIV;
+use CN\PHTML/DIV;
 
 // Create DIV object
 $div = new DIV('div-main', 'div-1');

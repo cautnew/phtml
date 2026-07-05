@@ -1,6 +1,6 @@
 <?php
 
-namespace PHTML\BS;
+namespace CN\PHTML\BS;
 
 class ROW extends BS
 {

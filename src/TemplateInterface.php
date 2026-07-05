@@ -1,10 +1,10 @@
 <?php
 
-namespace PHTML;
+namespace CN\PHTML;
 
-use PHTML\Core\BODY;
-use PHTML\Core\HEAD;
-use PHTML\Core\HTML;
+use CN\PHTML\Core\BODY;
+use CN\PHTML\Core\HEAD;
+use CN\PHTML\Core\HTML;
 
 interface TemplateInterface
 {

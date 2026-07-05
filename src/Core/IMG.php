@@ -1,6 +1,6 @@
 <?php
 
-namespace PHTML\Core;
+namespace CN\PHTML\Core;
 
 /**
  * Class IMG

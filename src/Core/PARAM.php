@@ -1,16 +1,15 @@
 <?php
 
-namespace PHTML\Core;
+namespace CN\PHTML\Core;
 
 /**
  * Class PARAM
  */
-class PARAM extends TAG
+class PARAM extends NONCONTENTTAG
 {
     public function __construct(string $name = '', string $value = '', ...$args)
     {
         $this->setTagType('param');
-        $this->setAllowContent(false);
 
         if (!empty($name)) {
             $this->setParameter('name', $name);

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHTML\FA;
+namespace CN\PHTML\FA;
 
 class CIRCLE_XMARK extends ICON
 {

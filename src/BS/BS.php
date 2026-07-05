@@ -1,9 +1,9 @@
 <?php
 
-namespace PHTML\BS;
+namespace CN\PHTML\BS;
 
-use PHTML\ComponentInterface;
-use PHTML\Core\TAG;
+use CN\PHTML\ComponentInterface;
+use CN\PHTML\Core\TAG;
 
 /**
  * Core for BS 5 components

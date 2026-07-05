@@ -1,17 +1,17 @@
 <?php
 
-namespace PHTML\Templates;
+namespace CN\PHTML\Templates;
 
-use PHTML\TemplateInterface;
-use PHTML\Core\BODY;
-use PHTML\Core\HEAD;
-use PHTML\Core\HTML;
-use PHTML\Core\LINK;
-use PHTML\Core\META;
-use PHTML\Core\SCRIPT;
-use PHTML\Core\TAG;
-use PHTML\Core\NONCONTENTTAG;
-use PHTML\Core\TITLE;
+use CN\PHTML\TemplateInterface;
+use CN\PHTML\Core\BODY;
+use CN\PHTML\Core\HEAD;
+use CN\PHTML\Core\HTML;
+use CN\PHTML\Core\LINK;
+use CN\PHTML\Core\META;
+use CN\PHTML\Core\SCRIPT;
+use CN\PHTML\Core\TAG;
+use CN\PHTML\Core\NONCONTENTTAG;
+use CN\PHTML\Core\TITLE;
 
 /**
  * Principal format of a HTML page

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHTML\FA;
+namespace CN\PHTML\FA;
 
-use PHTML\Core\TAG;
+use CN\PHTML\Core\TAG;
 
 class FA extends TAG
 {

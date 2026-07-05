@@ -1,9 +1,9 @@
 <?php
 
-namespace PHTML\Core;
+namespace CN\PHTML\Core;
 
-use PHTML\Exceptions\ContentNotAllowedException;
-use PHTML\Exceptions\ParametersNotAllowedException;
+use CN\PHTML\Exceptions\ContentNotAllowedException;
+use CN\PHTML\Exceptions\ParametersNotAllowedException;
 
 class TAG
 {

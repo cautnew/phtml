@@ -1,8 +1,8 @@
 <?php
 
-namespace PHTML\TW;
+namespace CN\PHTML\TW;
 
-use PHTML\Core\TAG;
+use CN\PHTML\Core\TAG;
 
 /*
  * Tailwind CSS

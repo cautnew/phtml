@@ -1,6 +1,6 @@
 <?php
 
-namespace PHTML;
+namespace CN\PHTML;
 
 interface ComponentInterface
 {

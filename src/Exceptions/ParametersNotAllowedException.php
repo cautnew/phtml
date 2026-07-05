@@ -1,6 +1,6 @@
 <?php
 
-namespace PHTML\Exceptions;
+namespace CN\PHTML\Exceptions;
 
 use \Exception;
 

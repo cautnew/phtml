@@ -6,7 +6,6 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "CautNew\\PHTML\\": "src/",
       "CN\\PHTML\\": "src/"
     }
   },

@@ -1,8 +1,8 @@
 <?php
 
-use PHTML\Core\DIV;
-use PHTML\Core\TAG;
-use PHTML\Templates\HTML5;
+use CN\PHTML\Core\DIV;
+use CN\PHTML\Core\TAG;
+use CN\PHTML\Templates\HTML5;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
