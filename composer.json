@@ -19,6 +19,8 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "vlucas/phpdotenv": "^5.6@dev"
+    "vlucas/phpdotenv": "^5.6@dev",
+    "cautnew/typedarr": "dev-main",
+    "cautnew/pcss": "dev-main"
   }
 }

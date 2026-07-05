@@ -4,8 +4,90 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30467d50f6037096b3ea09ddcd4afa7a",
+    "content-hash": "adcb72ba9e170c86f5b3809a3566b942",
     "packages": [
+        {
+            "name": "cautnew/pcss",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cautnew/pcss.git",
+                "reference": "b84dda9abd42618c066fbe2924793769d70ce41f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cautnew/pcss/zipball/b84dda9abd42618c066fbe2924793769d70ce41f",
+                "reference": "b84dda9abd42618c066fbe2924793769d70ce41f",
+                "shasum": ""
+            },
+            "require": {
+                "vlucas/phpdotenv": "^5.6@dev"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PCSS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Felipe Martins",
+                    "email": "felipedesmartins@gmail.com",
+                    "homepage": "http://www.cautnew.com.br",
+                    "role": "Back-End Developer"
+                }
+            ],
+            "description": "An easy way to create and manipulate CSS styles",
+            "support": {
+                "issues": "https://github.com/cautnew/pcss/issues",
+                "source": "https://github.com/cautnew/pcss/tree/main"
+            },
+            "time": "2026-07-05T01:18:27+00:00"
+        },
+        {
+            "name": "cautnew/typedarr",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cautnew/typedarr.git",
+                "reference": "62765a1df0aef2bb29e32f4d3d4b0d806178def7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cautnew/typedarr/zipball/62765a1df0aef2bb29e32f4d3d4b0d806178def7",
+                "reference": "62765a1df0aef2bb29e32f4d3d4b0d806178def7",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CN\\Typedarr\\": "src/",
+                    "Cautnew\\Typedarr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Felipe Martins",
+                    "email": "felipedesmartins@gmail.com"
+                }
+            ],
+            "description": "Create typed arrays in PHP.",
+            "support": {
+                "issues": "https://github.com/cautnew/typedarr/issues",
+                "source": "https://github.com/cautnew/typedarr/tree/main"
+            },
+            "time": "2026-07-05T01:25:21+00:00"
+        },
         {
             "name": "graham-campbell/result-type",
             "version": "1.1.x-dev",
@@ -490,11 +572,13 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "cautnew/pcss": 20,
+        "cautnew/typedarr": 20,
         "vlucas/phpdotenv": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
