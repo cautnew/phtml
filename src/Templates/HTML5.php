@@ -197,7 +197,6 @@ class HTML5 implements TemplateInterface
         }
 
         $this->appendToHead(new TITLE($this->pageTitle));
-        $this->appendToHead(TAG::meta('title', $this->pageTitle));
     }
 
     private function executeHeadCallbacks(): void
