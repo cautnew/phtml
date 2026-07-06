@@ -2,6 +2,8 @@
 
 namespace CN\PHTML\Core;
 
+use CN\PHTML\ArrayTAG;
+
 /**
  * Class TITLE
  */
@@ -14,7 +16,7 @@ class TITLE extends TAG
         $this->setAllowParameter(false);
     }
 
-    public function append(TAG | string | array | null $content, bool $clear = true): self
+    public function append(TAG | ArrayTAG | string | null $content, bool $clear = true): self
     {
         return parent::append($content, true);
     }

@@ -4,6 +4,7 @@ namespace CN\PHTML\Core;
 
 use CN\PHTML\Exceptions\ContentNotAllowedException;
 use CN\PHTML\Exceptions\ParametersNotAllowedException;
+use CN\PHTML\ArrayTAG;
 
 class TAG
 {
@@ -324,18 +325,25 @@ class TAG
         return $this;
     }
 
-    public function append(TAG|string|array|null $content, bool $clear = false): self
+    /**
+     * Append content to the tag. It can be a TAG object, a string, or an array
+     * of TAG objects and/or strings.
+     * @param TAG|ArrayTAG|string|null $content
+     * @param bool $replace
+     * If true, the current append list will be replaced by the new content.
+     * If false, the new content will be added to the current append list.
+     * @return TAG
+     */
+    public function append(TAG|ArrayTAG|string|null $content, bool $replace = false): self
     {
         if (!$this->isAllowContent()) {
             throw new ContentNotAllowedException($this->tagType);
         }
 
-        if (empty($content)) {
-            return $this;
-        }
-
-        if (is_array($content)) {
+        if ($content instanceof ArrayTAG) {
             return $this->setAppendList($content);
+        } else if (empty($content)) {
+            return $this;
         }
 
         $objAppended = null;
@@ -346,7 +354,7 @@ class TAG
             $objAppended = $content;
         }
 
-        if ($clear) {
+        if ($replace) {
             $this->appendList = [$objAppended];
         } else {
             $this->appendList[] = $objAppended;
@@ -360,7 +368,7 @@ class TAG
         return $this->appendBeforeList;
     }
 
-    public function setAppendBeforeList(array $appendList): self
+    public function setAppendBeforeList(ArrayTAG $appendList): self
     {
         foreach ($appendList as $element) {
             $this->appendBefore($element);
@@ -369,18 +377,16 @@ class TAG
         return $this;
     }
 
-    public function appendBefore(TAG|string|array|null $content): self
+    public function appendBefore(TAG|ArrayTAG|string|null $content): self
     {
         if (!$this->isAllowContent()) {
             throw new ContentNotAllowedException($this->tagType);
         }
 
-        if (empty($content)) {
-            return $this;
-        }
-
-        if (is_array($content)) {
+        if ($content instanceof ArrayTAG) {
             return $this->setAppendBeforeList($content);
+        } else if (empty($content)) {
+            return $this;
         }
 
         $objAppended = null;
@@ -401,7 +407,7 @@ class TAG
         return $this->appendAfterList;
     }
 
-    public function setAppendAfterList(array $appendList): self
+    public function setAppendAfterList(ArrayTAG $appendList): self
     {
         foreach ($appendList as $element) {
             $this->appendAfter($element);
@@ -410,18 +416,12 @@ class TAG
         return $this;
     }
 
-    public function appendAfter(TAG|string|array|null $content): self
+    public function appendAfter(TAG|ArrayTAG|string|null $content): self
     {
-        if (!$this->isAllowContent()) {
-            throw new ContentNotAllowedException($this->tagType);
-        }
-
-        if (empty($content)) {
-            return $this;
-        }
-
-        if (is_array($content)) {
+        if ($content instanceof ArrayTAG) {
             return $this->setAppendAfterList($content);
+        } else if (empty($content)) {
+            return $this;
         }
 
         $objAppended = null;

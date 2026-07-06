@@ -2,6 +2,7 @@
 
 namespace CN\PHTML\Templates;
 
+use CN\PHTML\ArrayTAG;
 use CN\PHTML\TemplateInterface;
 use CN\PHTML\Core\BODY;
 use CN\PHTML\Core\HEAD;
@@ -148,10 +149,10 @@ class HTML5 implements TemplateInterface
 
     private function assembleHtmlStructure(): void
     {
-        $this->html()->append([
+        $this->html()->append(new ArrayTAG([
             $this->head(),
             $this->body()
-        ]);
+        ]));
     }
 
     private function executePreRenderCallback(): void

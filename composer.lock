@@ -12,22 +12,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cautnew/pcss.git",
-                "reference": "b84dda9abd42618c066fbe2924793769d70ce41f"
+                "reference": "6e7a91ab95c2068b2efb895971b7a17502ebec97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cautnew/pcss/zipball/b84dda9abd42618c066fbe2924793769d70ce41f",
-                "reference": "b84dda9abd42618c066fbe2924793769d70ce41f",
+                "url": "https://api.github.com/repos/cautnew/pcss/zipball/6e7a91ab95c2068b2efb895971b7a17502ebec97",
+                "reference": "6e7a91ab95c2068b2efb895971b7a17502ebec97",
                 "shasum": ""
             },
             "require": {
+                "cautnew/typedarr": "dev-main",
                 "vlucas/phpdotenv": "^5.6@dev"
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "PCSS\\": "src/"
+                    "CN\\PCSS\\": "src/",
+                    "CautNew\\PCSS\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -47,7 +49,7 @@
                 "issues": "https://github.com/cautnew/pcss/issues",
                 "source": "https://github.com/cautnew/pcss/tree/main"
             },
-            "time": "2026-07-05T01:18:27+00:00"
+            "time": "2026-07-05T01:45:11+00:00"
         },
         {
             "name": "cautnew/typedarr",
@@ -55,20 +57,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cautnew/typedarr.git",
-                "reference": "62765a1df0aef2bb29e32f4d3d4b0d806178def7"
+                "reference": "416653d96e58a010e7da644773f4ad1f9ee7d08c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cautnew/typedarr/zipball/62765a1df0aef2bb29e32f4d3d4b0d806178def7",
-                "reference": "62765a1df0aef2bb29e32f4d3d4b0d806178def7",
+                "url": "https://api.github.com/repos/cautnew/typedarr/zipball/416653d96e58a010e7da644773f4ad1f9ee7d08c",
+                "reference": "416653d96e58a010e7da644773f4ad1f9ee7d08c",
                 "shasum": ""
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "CN\\Typedarr\\": "src/",
-                    "Cautnew\\Typedarr\\": "src/"
+                    "CN\\TypedArr\\": "src/",
+                    "CautNew\\TypedArr\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -86,7 +88,7 @@
                 "issues": "https://github.com/cautnew/typedarr/issues",
                 "source": "https://github.com/cautnew/typedarr/tree/main"
             },
-            "time": "2026-07-05T01:25:21+00:00"
+            "time": "2026-07-06T12:49:31+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -94,12 +96,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Result-Type.git",
-                "reference": "e01f4a821471308ba86aa202fed6698b6b695e3b"
+                "reference": "af45ab35db4f5eb070fe9e66b25c7b5e546391d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/e01f4a821471308ba86aa202fed6698b6b695e3b",
-                "reference": "e01f4a821471308ba86aa202fed6698b6b695e3b",
+                "url": "https://api.github.com/repos/GrahamCampbell/Result-Type/zipball/af45ab35db4f5eb070fe9e66b25c7b5e546391d1",
+                "reference": "af45ab35db4f5eb070fe9e66b25c7b5e546391d1",
                 "shasum": ""
             },
             "require": {
@@ -107,7 +109,7 @@
                 "phpoption/phpoption": "^1.9.5"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5.41 || ^9.6.22 || ^10.5.45 || ^11.5.7"
+                "phpunit/phpunit": "^8.5.52 || ^9.6.34 || ^10.5.63 || ^11.5.55 || ^12.5.14"
             },
             "default-branch": true,
             "type": "library",
@@ -149,7 +151,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-12-27T19:43:20+00:00"
+            "time": "2026-05-06T22:12:07+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -233,12 +235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638"
+                "reference": "141046a8f9477948ff284fa65be2095baafb94f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/a3cc8b044a6ea513310cbd48ef7333b384945638",
-                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/141046a8f9477948ff284fa65be2095baafb94f2",
+                "reference": "141046a8f9477948ff284fa65be2095baafb94f2",
                 "shasum": ""
             },
             "require": {
@@ -289,7 +291,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/1.x"
             },
             "funding": [
                 {
@@ -309,7 +311,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T11:45:10+00:00"
+            "time": "2026-04-10T16:19:22+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -317,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493"
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6d857f4d76bd4b343eac26d6b539585d2bc56493",
-                "reference": "6d857f4d76bd4b343eac26d6b539585d2bc56493",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
                 "shasum": ""
             },
             "require": {
@@ -375,7 +377,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/1.x"
             },
             "funding": [
                 {
@@ -395,7 +397,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-23T08:48:59+00:00"
+            "time": "2026-05-27T06:59:30+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -403,12 +405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608"
+                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
-                "reference": "0cc9dd0f17f61d8131e7df6b84bd344899fe2608",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
+                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
                 "shasum": ""
             },
             "require": {
@@ -460,7 +462,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/1.x"
             },
             "funding": [
                 {
@@ -480,7 +482,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-02T08:10:11+00:00"
+            "time": "2026-04-10T16:19:22+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
