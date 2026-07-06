@@ -5,6 +5,7 @@ namespace CN\PHTML\Core;
 use CN\PHTML\Exceptions\ContentNotAllowedException;
 use CN\PHTML\Exceptions\ParametersNotAllowedException;
 use CN\PHTML\ArrayTAG;
+use CN\PHTML\HTMLRenderer;
 
 class TAG
 {
@@ -12,7 +13,7 @@ class TAG
 
     private ?string $compileName = null;
 
-    private ?string $tagType;
+    protected ?string $tagType;
     private ?string $id;
     private ?string $name;
 
@@ -91,6 +92,8 @@ class TAG
     protected bool $allowParameter = true;
     protected bool $allowContent = true;
 
+    protected int $level = 0;
+
     public function __toString()
     {
         return self::render();
@@ -129,175 +132,9 @@ class TAG
         return $this;
     }
 
-    private function renderAppendBeforeList(): string
-    {
-        $html = "";
-        if (!empty($this->appendBeforeList)) {
-            foreach ($this->appendBeforeList as $element) {
-                $html .= $element;
-            }
-        }
-
-        return $html;
-    }
-
-    private function renderAppendAfterList(): string
-    {
-        $html = "";
-        if (!empty($this->appendAfterList)) {
-            foreach ($this->appendAfterList as $element) {
-                $html .= $element;
-            }
-        }
-
-        return $html;
-    }
-
-    private function renderAppendList(): string
-    {
-        $html = "";
-        foreach ($this->appendList as $element) {
-            $html .= $element;
-        }
-
-        return $html;
-    }
-
-    private function renderStartTag(): string
-    {
-        $html = $this->renderAppendBeforeList();
-        $html .= "<{$this->tagType}";
-
-        return $html;
-    }
-
-    private function renderCloseTag(): string
-    {
-        if (!$this->isAllowContent()) {
-            return " />";
-        }
-
-        return "</{$this->tagType}>";
-    }
-
-    private function renderTagAttributes(): string
-    {
-        $html = $this->renderClasslist();
-        $html .= $this->renderId();
-        $html .= $this->renderName();
-        $html .= $this->renderParameters();
-        $html .= $this->renderStyleAttributes();
-        $html .= $this->renderDataParameters();
-        $html .= $this->renderAriaParameters();
-        $html .= $this->renderBooleanParameters();
-
-        return $html;
-    }
-
-    private function renderProp(string $prop, string $value): string
-    {
-        return " {$prop}=\"{$value}\"";
-    }
-
-    private function renderClasslist(): ?string
-    {
-        if (!empty($this->classList)) {
-            return $this->renderProp('class', join(' ', $this->classList));
-        }
-
-        return null;
-    }
-
-    private function renderId(): ?string
-    {
-        if (!empty($this->id)) {
-            return $this->renderProp('id', $this->getId());
-        }
-
-        return null;
-    }
-
-    private function renderName(): ?string
-    {
-        if (!empty($this->name)) {
-            return $this->renderProp('name', $this->getName());
-        }
-
-        return null;
-    }
-
-    private function renderParameters(): ?string
-    {
-        $html = "";
-        foreach ($this->parameters as $parameter => $value) {
-            if (is_array($value)) {
-                $value = join(' ', $value);
-            }
-
-            $html .= $this->renderProp($parameter, $value);
-        }
-
-        return ($html !== "") ? $html : null;
-    }
-
-    private function renderStyleAttributes(): ?string
-    {
-        $html = "";
-        foreach ($this->styleAttributes as $parameter => $value) {
-            $html .= "{$parameter}: {$value};";
-        }
-
-        return ($html !== "") ? $this->renderProp('style', $html) : null;
-    }
-
-    private function renderDataParameters(): ?string
-    {
-        $html = "";
-        foreach ($this->parametersData as $parameter => $value) {
-            $html .= $this->renderProp("data-{$parameter}", $value);
-        }
-
-        return ($html !== "") ? $html : null;
-    }
-
-    private function renderAriaParameters(): ?string
-    {
-        $html = "";
-        foreach ($this->parametersAria as $parameter => $value) {
-            $html .= $this->renderProp("aria-{$parameter}", $value);
-        }
-
-        return ($html !== "") ? $html : null;
-    }
-
-    private function renderBooleanParameters(): ?string
-    {
-        $html = "";
-        foreach ($this->parametersBoolean as $parameter => $value) {
-            if ($value !== true) {
-                continue;
-            }
-
-            $html .= " {$parameter}";
-        }
-
-        return ($html !== "") ? $html : null;
-    }
-
     public function render(): string
     {
-        $html = $this->renderStartTag();
-        $html .= $this->renderTagAttributes();
-
-        if ($this->isAllowContent()) {
-            $html .= ">";
-            $html .= $this->renderAppendList();
-        }
-
-        $html .= $this->renderCloseTag();
-        $html .= $this->renderAppendAfterList();
-
-        return $html;
+        return HTMLRenderer::render($this);
     }
 
     public function getParent(): ?TAG
@@ -316,7 +153,7 @@ class TAG
         return $this->appendList;
     }
 
-    public function setAppendList(array $appendList): self
+    public function setAppendList(ArrayTAG $appendList): self
     {
         foreach ($appendList as $element) {
             $this->append($element);
@@ -476,6 +313,11 @@ class TAG
         return $this->setAllowParameter($allowParameter);
     }
 
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
     public function setParameters(array $parameters): self
     {
         if (empty($parameters)) {
@@ -559,6 +401,25 @@ class TAG
         return $this->setParameter($parameter, $value);
     }
 
+    public function setStyleParameters(array $parameters): self
+    {
+        foreach ($parameters as $parameter => $value) {
+            $this->setStyleParameter($parameter, $value);
+        }
+
+        return $this;
+    }
+
+    public function getStyleAttributes(): array
+    {
+        return $this->styleAttributes;
+    }
+
+    public function getStyleParameters(): array
+    {
+        return $this->styleAttributes;
+    }
+
     public function setStyleParameter(string $parameter, string $value): self
     {
         if (!in_array($parameter, $this->permStyleAttr)) {
@@ -566,15 +427,6 @@ class TAG
         }
 
         $this->styleAttributes[$parameter] = $value;
-
-        return $this;
-    }
-
-    public function setStyleParameters(array $parameters): self
-    {
-        foreach ($parameters as $parameter => $value) {
-            $this->setStyleParameter($parameter, $value);
-        }
 
         return $this;
     }
@@ -644,6 +496,11 @@ class TAG
         return $this;
     }
 
+    public function getDataAttributes(): array
+    {
+        return $this->parametersData;
+    }
+
     public function setDataAttribute(string $data, string|array $value): self
     {
         $this->parametersData[$data] = $value;
@@ -673,6 +530,11 @@ class TAG
         return $this;
     }
 
+    public function getAriaAttributes(): array
+    {
+        return $this->parametersAria;
+    }
+
     public function setAriaAttribute(string $aria, string $value): self
     {
         $this->parametersAria[$aria] = $value;
@@ -687,6 +549,11 @@ class TAG
     public function aria(string $aria, string $value): self
     {
         return $this->setAriaAttribute($aria, $value);
+    }
+
+    public function getBooleanAttributes(): array
+    {
+        return $this->parametersBoolean;
     }
 
     public function getId(): ?string
@@ -750,6 +617,11 @@ class TAG
     {
         $this->tagType = $tagType;
         return $this;
+    }
+
+    public function getTagType(): ?string
+    {
+        return $this->tagType ?? null;
     }
 
     public static function html(...$args): HTML
