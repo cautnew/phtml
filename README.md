@@ -17,7 +17,7 @@ It's possible to write HTML as a string, _but why?_
 To use the `PHTML` class, simply include the class file in your PHP project:
 
 ```php
-use CN\PHTML/Core/TAG;
+use CN\PHTML\Core\TAG;
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ The `SCRIPT` object allows you to create a `<script>` tag easily. Below is an ex
 ```php
 <?php
 
-use CN\PHTML/Core/TAG;
+use CN\PHTML\Core\TAG;
 
 // Create a DIV object
 $div = TAG::div();
@@ -78,14 +78,39 @@ You can also append one tag to other:
 use CN\PHTML/DIV;
 
 // Create DIV objects
-$div1 = new DIV('div-main', 'div-1');
-$div2 = new DIV('div-child', 'div-2');
+$div1 = new DIV(class: 'div-main', id: 'div-1');
+$div2 = new DIV(class: 'div-child', id: 'div-2');
 
 // Append $div2 into $div1
 $div1->append($div2);
 
 // Render the <div> tag
 echo $div1;
+?>
+```
+
+### Example appending a group of paragraphs
+
+
+
+```php
+<?php
+
+use CN\PHTML\DIV;
+
+// Create DIV object
+$div = new DIV(class: 'div-main', id: 'div-1');
+
+// Append input and change it's name parameter
+$div->append(new ArrayTAG([
+    TAG::p(html: 'My first paragraph'),
+    TAG::p(html: 'My second paragraph')
+]));
+
+$div->append('My paragraphs above');
+
+// Render the <div> tag
+echo $div;
 ?>
 ```
 
@@ -96,13 +121,32 @@ You can also append one tag to other and edit it's parameters and content before
 ```php
 <?php
 
-use CN\PHTML/DIV;
+use CN\PHTML\DIV;
 
 // Create DIV object
-$div = new DIV('div-main', 'div-1');
+$div = new DIV(class: 'div-main', id: 'div-1');
 
 // Append input and change it's name parameter
-$div->append($input = TAG::input('my-inputs', placeholder: 'Test'));
+$div->append($input = TAG::input(class: 'my-inputs', placeholder: 'Test'));
+$input->setName('input-test');
+
+// Render the <div> tag
+echo $div;
+?>
+```
+
+Also you can ommit some parameters names.
+
+```php
+<?php
+
+use CN\PHTML\DIV;
+
+// Create DIV object
+$div = new DIV('div-main', 'div-1', html: 'Test:');
+
+// Append input and change it's name parameter
+$div->append($input = TAG::input(class: 'my-inputs', placeholder: 'Test'));
 $input->setName('input-test');
 
 // Render the <div> tag
