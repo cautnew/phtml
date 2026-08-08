@@ -1,6 +1,6 @@
 {
   "name": "cautnew/phtml",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "An easy way to create and manipulate HTML tags",
   "type": "library",
   "license": "MIT",
@@ -20,7 +20,7 @@
   "minimum-stability": "stable",
   "require": {
     "vlucas/phpdotenv": "^5.6@dev",
-    "cautnew/typedarr": "dev-main",
-    "cautnew/pcss": "dev-main"
+    "cautnew/typedarr": "^1.0.0",
+    "cautnew/pcss": "^1.0.0"
   }
 }
