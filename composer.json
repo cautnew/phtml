@@ -17,7 +17,7 @@
       "role": "Back-End Developer"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "require": {
     "vlucas/phpdotenv": "^5.6@dev",
     "cautnew/typedarr": "dev-main",
