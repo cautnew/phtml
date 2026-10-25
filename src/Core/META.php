@@ -4,21 +4,26 @@ namespace CN\PHTML\Core;
 
 /**
  * Class META
+ *
+ * Represents the <meta> HTML tag: Document metadata. Belongs in HEAD. Void element.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
  */
 class META extends NONCONTENTTAG
 {
-    public function __construct(string $name = '', string $value = '', ...$args)
+    /**
+     * Create a new META tag.
+     *
+     * @param string $name Metadata name, e.g. "viewport" (or use "charset" through $args).
+     * @param string $content Metadata value (rendered as the "content" attribute).
+     * @param mixed ...$args Extra attributes in "name => value" form (also accepts "data", "aria" and "append").
+     */
+    public function __construct(string $name = '', string $content = '', mixed ...$args)
     {
         $this->setTagType('meta');
 
-        if (!empty($name)) {
-            $this->setParameter('name', $name);
-        }
-
-        if (!empty($value)) {
-            $this->setParameter('value', $value);
-        }
-
+        $this->setParameter('name', $name);
+        $this->setParameter('content', $content);
         $this->setParameters($args);
     }
 }

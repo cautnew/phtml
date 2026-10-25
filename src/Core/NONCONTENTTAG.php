@@ -5,8 +5,15 @@ namespace CN\PHTML\Core;
 use CN\PHTML\Exceptions\ContentNotAllowedException;
 use CN\PHTML\ArrayTAG;
 
+/**
+ * Class NONCONTENTTAG
+ *
+ * Base class of void HTML tags (br, hr, img, input, meta, link...), which
+ * cannot hold inner content and are rendered self-closed: <br />.
+ */
 abstract class NONCONTENTTAG extends TAG
 {
+    /** Void tags never accept inner content. */
     protected bool $allowContent = false;
 
     /**

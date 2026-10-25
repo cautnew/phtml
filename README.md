@@ -1,20 +1,22 @@
 # PHTML
 
-## Overview
-
-The `PHTML` class in PHP is designed to facilitate the creation of HTML tags using PHP objects. This class enables you to generate HTML tags dynamically, making it easier to build and manipulate HTML elements programmatically. You can change any part of your HTML before rendering the page without worrying about concats. One of the main features of this class is the ability to create a tag and change it's parameters and content with simple methods and avoiding concats and huge strings, only objects.
+Build HTML with PHP objects instead of string concatenation. Create a tag, change its attributes and content as many times as you want, and render it only when you need it.
 
 It's possible to write HTML as a string, _but why?_
 
 ## Features
 
-- Simplifies the creation of HTML tags using PHP.
-- Provides a clean and object-oriented way to generate HTML elements.
-- Supports creating a variety of HTML tags.
+- One class per HTML tag in `CN\PHTML\Core` (`DIV`, `P`, `IMG`, `TABLE`, `FORM`, `DIALOG`, ...), plus static factories on `TAG` (`TAG::div()`, `TAG::img()`, ...).
+- Fluent API: classes, `id`, `data-*`, `aria-*`, boolean attributes, inline styles and nested content.
+- Void tags (`br`, `hr`, `img`, `input`, `meta`, `link`, `source`, ...) extend `NONCONTENTTAG`: they render self-closed and throw if you try to add content.
+- Content can be a string, another tag or an `ArrayTAG` list.
+- Optional Bootstrap (`BS`), Font Awesome (`FA`) and Tailwind (`TW`) helpers.
 
 ## Installation
 
-To use the `PHTML` class, simply include the class file in your PHP project:
+```bash
+composer require cautnew/phtml
+```
 
 ```php
 use CN\PHTML\Core\TAG;
@@ -22,171 +24,174 @@ use CN\PHTML\Core\TAG;
 
 ## Usage
 
-### Creating a SCRIPT Tag
+### Creating a tag
 
-The `SCRIPT` object allows you to create a `<script>` tag easily. Below is an example of how to use the `PHTML` class to generate a `<script>` tag:
+Use the static factories (no extra imports) or instantiate the class directly:
 
 ```php
-<?php
-
+use CN\PHTML\Core\DIV;
 use CN\PHTML\Core\TAG;
 
-// Create a DIV object
+$a = TAG::div('card', 'card-1', 'Hello');   // class, id, html
+$b = new DIV(class: 'card', id: 'card-1', html: 'Hello');
+
+echo $a; // <div class="card" id="card-1">Hello</div>
+```
+
+### Classes, attributes and styles
+
+```php
 $div = TAG::div();
 
-// Set attributes for the <div> tag
-$div->addClass('main-content');
-$div->setAttribute('style', 'backgroun-color: green;');
-$div->setAttribute('title', 'Div title');
-$div->setAttribute('lang', 'en');
+$div->addClass('main-content')              // also accepts 'a b' or ['a', 'b']
+    ->setAttribute('title', 'Div title')
+    ->setAttribute('lang', 'en')
+    ->data('role', 'panel')                 // data-role="panel"
+    ->aria('label', 'Main panel')           // aria-label="Main panel"
+    ->setStyle('color', 'green')            // style="color: green;"
+    ->append('This is my div!');
 
-// Add a content to this DIV
-$div->append('This is my div!');
-
-// Render the <script> tag
-echo $div->render();
-?>
+echo $div;
 ```
 
-### Example with inline Script
-
-You can also create a `<script>` tag with inline JavaScript code:
+Extra attributes can also be passed to any constructor or factory as named arguments:
 
 ```php
-<?php
-
-use CN\PHTML/Core/TAG;
-
-// Create a SCRIPT object
-$script = TAG::script();
-
-// Set the inline JavaScript code
-$script->append('console.log("Hello, world!");');
-
-// Render the <script> tag
-echo $script->render();
-?>
+echo TAG::a('/home', 'Home', title: 'Go home');
 ```
 
-### Example appending one object to other
-
-You can also append one tag to other:
+### Nesting tags
 
 ```php
-<?php
-
-use CN\PHTML/DIV;
-
-// Create DIV objects
 $div1 = new DIV(class: 'div-main', id: 'div-1');
 $div2 = new DIV(class: 'div-child', id: 'div-2');
 
-// Append $div2 into $div1
-$div1->append($div2);
+$div1->append($div2);       // $div2 can still be edited after being appended
+$div2->append('Inside!');
 
-// Render the <div> tag
 echo $div1;
-?>
+// <div class="div-main" id="div-1"><div class="div-child" id="div-2">Inside!</div></div>
 ```
 
-### Example appending a group of paragraphs
-
-
+Group several elements with `ArrayTAG`:
 
 ```php
-<?php
+use CN\PHTML\ArrayTAG;
 
-use CN\PHTML\DIV;
-
-// Create DIV object
-$div = new DIV(class: 'div-main', id: 'div-1');
-
-// Append input and change it's name parameter
+$div = TAG::div('div-main');
 $div->append(new ArrayTAG([
     TAG::p(html: 'My first paragraph'),
-    TAG::p(html: 'My second paragraph')
+    TAG::p(html: 'My second paragraph'),
 ]));
 
-$div->append('My paragraphs above');
-
-// Render the <div> tag
 echo $div;
-?>
 ```
 
-### Example appending inputs and changing later
-
-You can also append one tag to other and edit it's parameters and content before rendering it:
+### Content before and after a tag
 
 ```php
-<?php
-
-use CN\PHTML\DIV;
-
-// Create DIV object
-$div = new DIV(class: 'div-main', id: 'div-1');
-
-// Append input and change it's name parameter
-$div->append($input = TAG::input(class: 'my-inputs', placeholder: 'Test'));
-$input->setName('input-test');
-
-// Render the <div> tag
-echo $div;
-?>
+echo TAG::div(html: 'x')->appendBefore('<!-- start -->')->appendAfter('<!-- end -->');
+// <!-- start --><div>x</div><!-- end -->
 ```
 
-Also you can ommit some parameters names.
+### Void tags
 
 ```php
-<?php
+echo TAG::br();                               // <br />
+echo TAG::img('/logo.png', 'Company logo');   // <img src="/logo.png" alt="Company logo" />
+echo TAG::hr('divider');                      // <hr class="divider" />
 
-use CN\PHTML\DIV;
-
-// Create DIV object
-$div = new DIV('div-main', 'div-1', html: 'Test:');
-
-// Append input and change it's name parameter
-$div->append($input = TAG::input(class: 'my-inputs', placeholder: 'Test'));
-$input->setName('input-test');
-
-// Render the <div> tag
-echo $div;
-?>
+TAG::br()->append('text');                    // throws ContentNotAllowedException
 ```
+
+### Forms
+
+```php
+use CN\PHTML\Core\INPUT_TEXT;
+
+$form = TAG::form(action: '/save', method: 'post');
+$form->append(TAG::label(for: 'name', html: 'Name'));
+$form->append((new INPUT_TEXT(id: 'name', name: 'name', placeholder: 'Your name'))->required());
+$form->append(
+    TAG::select(name: 'country')
+        ->append(TAG::option('br', 'Brazil')->selected())
+        ->append(TAG::option('us', 'United States'))
+);
+$form->append(TAG::button(html: 'Save', type: 'submit'));
+
+echo $form;
+```
+
+### Tables
+
+```php
+$table = TAG::table('table')
+    ->append(TAG::caption(side: 'bottom', html: 'Users'))
+    ->append(TAG::thead()->append(TAG::tr()->append(TAG::th(html: 'Name'))))
+    ->append(TAG::tbody()->append(TAG::tr()->append(TAG::td(html: 'Ann'))));
+
+echo $table;
+```
+
+### Text-level and semantic tags
+
+```php
+echo TAG::p(html: 'Press ' . TAG::kbd(html: 'Ctrl+C') . ' to copy.');
+echo TAG::time('2024-05-01', html: 'May 1st');
+echo TAG::figure()->append(TAG::img('/a.png', 'A'))->append(TAG::figcaption(html: 'Figure A'));
+echo TAG::details()->append(TAG::summary(html: 'More'))->append('Hidden text');
+```
+
+### A complete page
+
+```php
+use CN\PHTML\Templates\HTML5;
+
+$page = new HTML5();
+$page->setPageTitle('My page');
+$page->appendToBody(TAG::h1(html: 'Welcome'));
+
+echo $page;
+```
+
+## Supported tags
+
+| Group | Classes (`CN\PHTML\Core`) |
+|-------|---------------------------|
+| Document | `HTML`, `HEAD`, `BODY`, `TITLE`, `META`, `LINK`, `BASE`, `SCRIPT`, `STYLE`, `NOSCRIPT`, `TEMPLATE`, `SLOT` |
+| Sections | `HEADER`, `NAV`, `MAIN`, `SECTION`, `ARTICLE`, `ASIDE`, `FOOTER`, `ADDRESS`, `HGROUP`, `SEARCH`, `H1`–`H6` |
+| Grouping | `DIV`, `P`, `PRE`, `BLOCKQUOTE`, `HR`, `UL`, `OL`, `LI`, `MENU`, `DL`, `DT`, `DD`, `FIGURE`, `FIGCAPTION` |
+| Text | `A`, `ABBR`, `B`, `BDI`, `BDO`, `BR`, `CITE`, `CODE`, `DATA`, `DFN`, `EM`, `I`, `KBD`, `MARK`, `Q`, `RP`, `RT`, `RUBY`, `S`, `SAMP`, `SMALL`, `SPAN`, `STRONG`, `SUB`, `SUP`, `TIME`, `U`, `VARIABLE` (`<var>`), `WBR`, `DEL`, `INS` |
+| Embedded | `IMG`, `PICTURE`, `SOURCE`, `TRACK`, `AUDIO`, `VIDEO`, `CANVAS`, `IFRAME`, `EMBED`, `TAG_OBJECT` (`<object>`), `PARAM`, `MAP`, `AREA` |
+| Tables | `TABLE`, `CAPTION`, `COLGROUP`, `COL`, `THEAD`, `TBODY`, `TFOOT`, `TR`, `TH`, `TD` |
+| Forms | `FORM`, `FIELDSET`, `LEGEND`, `LABEL`, `INPUT`, `INPUT_TEXT`, `INPUT_HIDDEN`, `INPUT_SUBMIT`, `BUTTON`, `SELECT`, `OPTGROUP`, `OPTION`, `DATALIST`, `TEXTAREA`, `OUTPUT`, `PROGRESS`, `METER` |
+| Interactive | `DETAILS`, `SUMMARY`, `DIALOG` |
+
+Every class has a static factory on `TAG` named after the tag (`TAG::pre()`, `TAG::dialog()`...). Names that would clash with existing methods are prefixed: `TAG::tagTitle()`, `TAG::tagData()`, `TAG::tagCol()`, `TAG::tagObject()`; and `<var>` is `TAG::variable()`.
+
+> Attribute values are written as given and are **not** escaped. Escape user input with `htmlspecialchars()` before passing it to a tag.
 
 ## Methods
 
-### setAttribute
+| Method | Description |
+|--------|-------------|
+| `setAttribute($name, $value)` / `attribute()` | Sets an attribute. Boolean attributes (`required`, `disabled`, `checked`...) take `true`/`false`. |
+| `addClass($class)` | Adds one or more CSS classes. |
+| `setId($id)` / `id()` and `setName($name)` / `name()` | Set `id` and `name`. |
+| `setStyle($property, $value)` | Sets an inline CSS property from an allowed list. |
+| `data($name, $value)` / `aria($name, $value)` | Set `data-*` and `aria-*` attributes. |
+| `append($content)` | Adds a string, tag or `ArrayTAG` inside the tag. |
+| `appendBefore($content)` / `appendAfter($content)` | Adds content outside the tag. |
+| `clearAppend()` | Removes the inner content. |
+| `render()` / `echo $tag` | Returns the HTML string. |
 
-Sets an attribute for the HTML tag.
+## Tests
 
-```php
-$element->setAttribute($name, $value);
+```bash
+composer install
+composer test
 ```
 
-- `$name` (string): The name of the attribute.
-- `$value` (string): The value of the attribute.
+## License
 
-### setContent
-
-Sets the content inside the HTML tag.
-
-```php
-$element->append($content);
-```
-
-- `$content` (string): The content to be placed inside the tag.
-
-### render
-
-Renders the HTML tag as a string.
-
-```php
-echo $element->render();
-```
-
-## Conclusion
-
-The `PHTML` class provides a powerful and flexible way to generate HTML tags using PHP objects. Whether you need to create simple tags or complex structures, this class offers a clean and efficient solution. The `SCRIPT` object is just one example of how you can leverage this class to create dynamic and interactive web pages.
-
-Feel free to explore and extend the `PHTML` class to suit your needs. Happy coding!
+MIT

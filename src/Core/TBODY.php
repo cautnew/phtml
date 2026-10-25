@@ -4,10 +4,22 @@ namespace CN\PHTML\Core;
 
 /**
  * Class TBODY
+ *
+ * Represents the <tbody> HTML tag: Body rows of a TABLE.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/tbody
  */
 class TBODY extends TAG
 {
-    public function __construct(?string $class = null, ?string $id = null, ?string $html = null, ...$args)
+    /**
+     * Create a new TBODY tag.
+     *
+     * @param ?string $class CSS class(es), separated by spaces.
+     * @param ?string $id Value of the "id" attribute.
+     * @param ?string $html Initial inner content (text or HTML).
+     * @param mixed ...$args Extra attributes in "name => value" form (also accepts "data", "aria" and "append").
+     */
+    public function __construct(?string $class = null, ?string $id = null, ?string $html = null, mixed ...$args)
     {
         $this->setTagType('tbody');
 
