@@ -32,11 +32,7 @@ class COL extends BS
 
   private function addClassSize(string $sizeName, int $size): void
   {
-    $classRad = "col";
-
-    if (!empty($sizeName)) {
-      $classRad .= "-{$sizeName}";
-    }
+    $classRad = $sizeName === '' ? 'col' : $sizeName . ':col';
 
     if ($size > 0) {
       $this->addClass("{$classRad}-{$size}");
@@ -52,7 +48,7 @@ class COL extends BS
 
     if (!$this->isSizeSet()) {
       $this->addClass('col');
-      return $this;
+      return parent::render();
     }
 
     if ($this->colSize > 0) {
@@ -60,7 +56,7 @@ class COL extends BS
     }
 
     if ($this->colXsSize > 0) {
-      $this->addClassSize('xs', $this->colXsSize);
+      $this->addClassSize('', $this->colXsSize);
     }
 
     if ($this->colSmSize > 0) {
@@ -80,7 +76,7 @@ class COL extends BS
     }
 
     if ($this->colXxlSize > 0) {
-      $this->addClassSize('xxl', $this->colXxlSize);
+      $this->addClassSize('2xl', $this->colXxlSize);
     }
 
     return parent::render();

@@ -2,19 +2,10 @@
 
 namespace CN\PHTML\BS;
 
-class CARD extends BS
+class CARD extends BS_ELEMENT
 {
   public function __construct(...$args)
   {
-    $this->setTagType('div');
-    $this->setParameters($args);
-  }
-
-  public function render(): string
-  {
-    $this->setFixedClasses($this->getClassList());
-    $this->addClass('card');
-
-    return parent::render();
+    parent::__construct('div', 'card', ...$args);
   }
 }

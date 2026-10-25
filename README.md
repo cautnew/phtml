@@ -122,6 +122,35 @@ $form->append(TAG::button(html: 'Save', type: 'submit'));
 echo $form;
 ```
 
+### Bootstrap 6 Alpha components
+
+The `CN\PHTML\BS` namespace provides composable wrappers for Bootstrap 6 Alpha 1 components, grid/layout, tables, and form controls. Compose child objects with `append()` or pass them to a parent constructor. These objects generate markup and data attributes; Bootstrap CSS and its JavaScript modules are still required for styling and interactive plugins.
+
+```php
+use CN\PHTML\BS\BS;
+
+$accordion = BS::accordion()->append(
+    BS::accordionItem(open: true)
+        ->append(BS::accordionHeader(html: 'Question'))
+        ->append(BS::accordionBody(html: 'Answer'))
+);
+
+$button = BS::bsButton(html: 'Save')
+    ->variant('solid')
+    ->theme('success')
+    ->disabled();
+
+$dialog = BS::bsDialog(id: 'help')->append(
+    BS::dialogBody(html: 'Native HTML dialog')
+);
+
+echo $accordion, $button, $dialog;
+```
+
+Component wrappers include variant and state helpers such as `theme()`, `active()`, `disabled()`, `open()`, `show()`, and `size()`. Bootstrap 6-specific markup is used for native `<details>/<summary>` accordions, `<dialog>`/drawers, theme variants, and responsive grid classes. For other utility classes or data/ARIA attributes, use `addClass()`, `data()`, and `aria()` as with core tags.
+
+The `BS` class extends the core `TAG` class, so factories that share a name with HTML tags use a `bs` prefix: `BS::bsButton()`, `BS::bsDialog()`, `BS::bsMenu()`, `BS::bsNav()`, `BS::bsProgress()`, and `BS::bsTable()`.
+
 ### Tables
 
 ```php

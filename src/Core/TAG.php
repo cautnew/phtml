@@ -65,6 +65,8 @@ class TAG
         'readonly',
         'required',
         'selected',
+        'open',
+        'switch',
         'autoplay',
         'muted',
         'playsinline'

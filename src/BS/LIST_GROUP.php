@@ -2,31 +2,34 @@
 
 namespace CN\PHTML\BS;
 
-class LIST_GROUP extends BS
+class LIST_GROUP extends BS_ELEMENT
 {
-  private bool $isFlushed = false;
-
   public function __construct(...$args)
   {
-    $this->setTagType('ul');
-    $this->setParameters($args);
+    parent::__construct('ul', 'list-group', ...$args);
   }
 
-  public function render(): string
+  public function flush(bool $flush = true): self
   {
-    $this->setFixedClasses($this->getClassList());
-    $this->addClass('list-group');
+    $this->toggleClass('list-group-flush', $flush);
+    return $this;
+  }
 
-    if ($this->isFlushed) {
-      $this->addClass('list-group-flush');
+  public function numbered(bool $numbered = true): self
+  {
+    $this->toggleClass('list-group-numbered', $numbered);
+    if ($numbered) {
+      $this->setTagType('ol');
+    } elseif ($this->getTagType() === 'ol') {
+      $this->setTagType('ul');
     }
-
-    return parent::render();
+    return $this;
   }
 
-  public function flush($isFlushed = true): self
+  public function horizontal(string|bool $breakpoint = true): self
   {
-    $this->isFlushed = $isFlushed;
+    $class = 'list-group-horizontal' . (is_string($breakpoint) ? '-' . $breakpoint : '');
+    $this->toggleClass($class, (bool) $breakpoint);
     return $this;
   }
 }
