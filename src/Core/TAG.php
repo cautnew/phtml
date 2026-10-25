@@ -2368,4 +2368,246 @@ class TAG
     {
         return new WBR($class, ...$args);
     }
+
+    /**
+     * Create a UL_LIST: a unordered list (<ul>) built from a list of children (LI).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function ulList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\UL_LIST
+    {
+        return new \CN\PHTML\Lists\UL_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a OL_LIST: a ordered list (<ol>) built from a list of children (LI).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function olList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\OL_LIST
+    {
+        return new \CN\PHTML\Lists\OL_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a MENU_LIST: a menu (<menu>) built from a list of children (LI).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function menuList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\MENU_LIST
+    {
+        return new \CN\PHTML\Lists\MENU_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a SELECT_LIST: a drop-down list (<select>) built from a list of children (OPTION, OPTGROUP).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function selectList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\SELECT_LIST
+    {
+        return new \CN\PHTML\Lists\SELECT_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a OPTGROUP_LIST: a option group (<optgroup>) built from a list of children (OPTION).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function optgroupList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\OPTGROUP_LIST
+    {
+        return new \CN\PHTML\Lists\OPTGROUP_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a DATALIST_LIST: a suggestion list (<datalist>) built from a list of children (OPTION).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function datalistList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\DATALIST_LIST
+    {
+        return new \CN\PHTML\Lists\DATALIST_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a TABLE_LIST: a table (<table>) built from a list of children (CAPTION, COLGROUP, THEAD, TBODY, TFOOT, TR).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function tableList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\TABLE_LIST
+    {
+        return new \CN\PHTML\Lists\TABLE_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a THEAD_LIST: a table header (<thead>) built from a list of children (TR).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function theadList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\THEAD_LIST
+    {
+        return new \CN\PHTML\Lists\THEAD_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a TBODY_LIST: a table body (<tbody>) built from a list of children (TR).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function tbodyList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\TBODY_LIST
+    {
+        return new \CN\PHTML\Lists\TBODY_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a TFOOT_LIST: a table footer (<tfoot>) built from a list of children (TR).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function tfootList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\TFOOT_LIST
+    {
+        return new \CN\PHTML\Lists\TFOOT_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a TR_LIST: a table row (<tr>) built from a list of children (TH, TD).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function trList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\TR_LIST
+    {
+        return new \CN\PHTML\Lists\TR_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a COLGROUP_LIST: a column group (<colgroup>) built from a list of children (COL).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function colgroupList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\COLGROUP_LIST
+    {
+        return new \CN\PHTML\Lists\COLGROUP_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a DL_LIST: a description list (<dl>) built from a list of children (DT, DD).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function dlList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\DL_LIST
+    {
+        return new \CN\PHTML\Lists\DL_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a HEAD_LIST: a document head (<head>) built from a list of children (TITLE, META, LINK, BASE, SCRIPT, STYLE, NOSCRIPT, TEMPLATE).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function headList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\HEAD_LIST
+    {
+        return new \CN\PHTML\Lists\HEAD_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a HTML_LIST: a root element (<html>) built from a list of children (HEAD, BODY).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function htmlList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\HTML_LIST
+    {
+        return new \CN\PHTML\Lists\HTML_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a PICTURE_LIST: a responsive image (<picture>) built from a list of children (SOURCE, IMG).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function pictureList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\PICTURE_LIST
+    {
+        return new \CN\PHTML\Lists\PICTURE_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a AUDIO_LIST: a audio player (<audio>) built from a list of children (SOURCE, TRACK).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function audioList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\AUDIO_LIST
+    {
+        return new \CN\PHTML\Lists\AUDIO_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a VIDEO_LIST: a video player (<video>) built from a list of children (SOURCE, TRACK).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function videoList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\VIDEO_LIST
+    {
+        return new \CN\PHTML\Lists\VIDEO_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a MAP_LIST: a image map (<map>) built from a list of children (AREA).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function mapList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\MAP_LIST
+    {
+        return new \CN\PHTML\Lists\MAP_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a RUBY_LIST: a ruby annotation (<ruby>) built from a list of children (RT, RP).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function rubyList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\RUBY_LIST
+    {
+        return new \CN\PHTML\Lists\RUBY_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a HGROUP_LIST: a heading group (<hgroup>) built from a list of children (H1, H2, H3, H4, H5, H6, P).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function hgroupList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\HGROUP_LIST
+    {
+        return new \CN\PHTML\Lists\HGROUP_LIST($items, ...$args);
+    }
+
+    /**
+     * Create a TAG_OBJECT_LIST: a external object (<object>) built from a list of children (PARAM).
+     *
+     * @param iterable $items Children, as an array or ArrayTAG.
+     * @param mixed ...$args Same arguments of the matching plain tag.
+     */
+    public static function tagObjectList(iterable $items = [], mixed ...$args): \CN\PHTML\Lists\TAG_OBJECT_LIST
+    {
+        return new \CN\PHTML\Lists\TAG_OBJECT_LIST($items, ...$args);
+    }
 }

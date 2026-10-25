@@ -154,6 +154,48 @@ $page->appendToBody(TAG::h1(html: 'Welcome'));
 echo $page;
 ```
 
+## List tags (tags built from a list of children)
+
+For every tag that has required children in the HTML content model there is a `*_LIST` class in `CN\PHTML\Lists`. It works like the plain tag, but its first argument is a list (array or `ArrayTAG`) of children. Only the allowed child types are accepted; anything else throws an `InvalidArgumentException`. Every other argument is forwarded to the plain tag (`class`, `id`, `html`, extra attributes...).
+
+```php
+use CN\PHTML\Core\{TAG, TD, TH};
+use CN\PHTML\Lists\{TABLE_LIST, TBODY_LIST, THEAD_LIST, TR_LIST, UL_LIST};
+
+echo new UL_LIST([TAG::li(html: 'First'), TAG::li(html: 'Second')], class: 'menu');
+// <ul class="menu"><li>First</li><li>Second</li></ul>
+
+echo TAG::selectList([TAG::option('br', 'Brazil'), TAG::option('us', 'USA')], name: 'country');
+
+echo new TABLE_LIST([
+    new THEAD_LIST([new TR_LIST([new TH(html: 'Name')])]),
+    new TBODY_LIST([new TR_LIST([new TD(html: 'Ann')])]),
+], class: 'table');
+
+new UL_LIST([TAG::p(html: 'x')]); // InvalidArgumentException: only LI is accepted
+```
+
+More helpers: `addItem($child)` and `setItems($list)` add children later; `UL_LIST::allowedChildren()` returns the accepted classes; `TR_LIST::newList([...])` builds an `ArrayTAG` that validates its own items. Each class also has a factory on `TAG` (`TAG::ulList()`, `TAG::trList()`...). A runnable demo is in [src/Examples/ListExamples.php](src/Examples/ListExamples.php).
+
+| Class | Accepted children |
+|-------|-------------------|
+| `UL_LIST`, `OL_LIST`, `MENU_LIST` | `LI` |
+| `SELECT_LIST` | `OPTION`, `OPTGROUP` |
+| `OPTGROUP_LIST`, `DATALIST_LIST` | `OPTION` |
+| `TABLE_LIST` | `CAPTION`, `COLGROUP`, `THEAD`, `TBODY`, `TFOOT`, `TR` |
+| `THEAD_LIST`, `TBODY_LIST`, `TFOOT_LIST` | `TR` |
+| `TR_LIST` | `TH`, `TD` |
+| `COLGROUP_LIST` | `COL` |
+| `DL_LIST` | `DT`, `DD` |
+| `HEAD_LIST` | `TITLE`, `META`, `LINK`, `BASE`, `SCRIPT`, `STYLE`, `NOSCRIPT`, `TEMPLATE` |
+| `HTML_LIST` | `HEAD`, `BODY` |
+| `PICTURE_LIST` | `SOURCE`, `IMG` |
+| `AUDIO_LIST`, `VIDEO_LIST` | `SOURCE`, `TRACK` |
+| `MAP_LIST` | `AREA` |
+| `RUBY_LIST` | `RT`, `RP` |
+| `HGROUP_LIST` | `H1`–`H6`, `P` |
+| `TAG_OBJECT_LIST` | `PARAM` |
+
 ## Supported tags
 
 | Group | Classes (`CN\PHTML\Core`) |
